@@ -483,15 +483,23 @@ const ALL_QUESTIONS = [
 {q:"¿Qué caracteriza al modelo en cascada?",opts:["Fases secuenciales bien definidas","Ausencia de documentación","Iteraciones constantes","Cambios constantes de requisitos"],ans:0},
 ];
 
-const BATCH = 10;
+let examBatch = 10;
 let mode = '', questions = [], current = 0, answers = {}, revealed = {}, filterReview = 'all';
 
 function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 
 function startMode(m){
   mode=m; answers={}; revealed={}; current=0;
-  questions = m==='exam' ? shuffle(ALL_QUESTIONS).slice(0,BATCH) : shuffle(ALL_QUESTIONS);
+  questions = m==='exam' ? shuffle(ALL_QUESTIONS).slice(0,examBatch) : shuffle(ALL_QUESTIONS);
   render();
+}
+
+function updateBatch(val){
+  examBatch=parseInt(val);
+  const bv=document.getElementById('batchVal');
+  const bd=document.getElementById('batchDesc');
+  if(bv) bv.textContent=val;
+  if(bd) bd.textContent=val;
 }
 
 function selectAnswer(qi,oi){
@@ -526,11 +534,19 @@ function renderStart(){
   return`<div class="start-screen">
     <div class="start-title">Tipo Test<br><em>FIS 25·26</em></div>
     <p class="start-sub">${ALL_QUESTIONS.length} preguntas · Elige un modo para empezar</p>
+    <div class="custom-selector">
+      <label>Preguntas del examen simulado <span>→ <strong id="batchVal">${examBatch}</strong></span></label>
+      <div class="slider-wrapper">
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">5</span>
+        <input class="custom-slider" type="range" min="5" max="${ALL_QUESTIONS.length}" step="5" value="${examBatch}" oninput="updateBatch(this.value)">
+        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">${ALL_QUESTIONS.length}</span>
+      </div>
+    </div>
     <div class="mode-grid">
       <div class="mode-card" onclick="startMode('exam')">
         <div class="mode-icon">🎯</div>
         <div class="mode-name">Examen simulado</div>
-        <div class="mode-desc">${BATCH} preguntas aleatorias. Sin pistas. Resultado al final.</div>
+        <div class="mode-desc"><span id="batchDesc">${examBatch}</span> preguntas aleatorias. Sin pistas. Resultado al final.</div>
       </div>
       <div class="mode-card" onclick="startMode('practice')">
         <div class="mode-icon">📚</div>
