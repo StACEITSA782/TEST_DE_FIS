@@ -574,7 +574,9 @@ function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(
 
 function startMode(m){
   mode=m; answers={}; revealed={}; current=0;
-  questions = m==='exam' ? shuffle(ALL_QUESTIONS).slice(0,examBatch) : shuffle(ALL_QUESTIONS);
+  const n=Math.min(Math.max(parseInt(document.getElementById('batchInput')?.value)||examBatch,1),ALL_QUESTIONS.length);
+  examBatch=n;
+  questions = m==='exam' ? shuffle(ALL_QUESTIONS).slice(0,n) : shuffle(ALL_QUESTIONS);
   render();
 }
 
@@ -615,6 +617,9 @@ function renderStart(){
   return`<div class="start-screen">
     <div class="quiz-card">
       <div class="qm-title">Test FIS 25·26</div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,192,240,0.2);border-radius:10px;padding:14px 16px;margin-bottom:22px;font-size:13px;color:#c8c0f0;line-height:1.6;">
+        He creado un html que sirve para practicar estas preguntas, no sé si estarán bien contestadas, ante la duda revisen cada una de las respuestas. Estas preguntas las he podido conseguir gracias a la colaboración de varios compañeros, espero que les sirva para praticar, ya que el año pasado cambiaron las preguntas.
+      </div>
       <div class="qm-field">
         <label class="qm-label">Número de preguntas</label>
         <input class="qm-input" type="number" min="5" max="${ALL_QUESTIONS.length}" step="5" value="${examBatch}" id="batchInput" oninput="updateBatch(this.value)">
