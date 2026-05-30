@@ -66,32 +66,116 @@
 
   main { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
 
-  /* START SCREEN */
-  .start-screen { text-align: center; padding: 60px 20px; }
-  .start-title {
-    font-family: var(--mono);
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.2;
+  /* START SCREEN — QuizMomento style */
+  body.on-start {
+    background: linear-gradient(135deg, #1a1040 0%, #2d1b6e 35%, #1e3a6e 70%, #0f1a3a 100%) !important;
+    background-attachment: fixed !important;
+  }
+  .start-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 57px);
+    padding: 32px 16px;
+  }
+  .quiz-card {
+    background: rgba(22, 20, 50, 0.88);
+    border: 1px solid rgba(140, 110, 255, 0.3);
+    border-radius: 20px;
+    padding: 40px 36px 36px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    backdrop-filter: blur(12px);
+  }
+  .qm-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: -0.02em;
+  }
+  .qm-field { margin-bottom: 18px; }
+  .qm-label {
+    display: block;
+    font-size: 14px;
+    color: #c8c0f0;
     margin-bottom: 8px;
+    font-weight: 500;
+    text-align: center;
   }
-  .start-title em { color: var(--accent-light); font-style: normal; }
-  .start-sub { font-size: 15px; color: var(--muted); margin-bottom: 48px; }
-  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 520px; margin: 0 auto; }
-  .mode-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px 24px;
+  .qm-input {
+    width: 100%;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 16px;
+    font-size: 16px;
+    color: #111;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .qm-input:focus { box-shadow: 0 0 0 3px rgba(140,110,255,0.5); }
+  .qm-checkrow {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 24px;
+    justify-content: center;
+  }
+  .qm-check {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    color: #c8c0f0;
     cursor: pointer;
-    text-align: left;
-    transition: border-color 0.15s, background 0.15s;
+    font-weight: 500;
+    user-select: none;
   }
-  .mode-card:hover { border-color: var(--accent); background: var(--surface2); }
-  .mode-icon { font-size: 28px; margin-bottom: 12px; }
-  .mode-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  .mode-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .qm-check input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: #7c6af7;
+    cursor: pointer;
+  }
+  .qm-btn-start {
+    width: 100%;
+    background: linear-gradient(135deg, #5b3de8 0%, #3d6fdb 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: opacity 0.15s, transform 0.1s;
+    box-shadow: 0 4px 16px rgba(91,61,232,0.4);
+    margin-bottom: 10px;
+  }
+  .qm-btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
+  .qm-btn-start:active { transform: translateY(0); }
+  .qm-btn-practice {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #c8c0f0;
+    cursor: pointer;
+    font-family: 'IBM Plex Sans', sans-serif;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .qm-btn-practice:hover { background: rgba(255,255,255,0.1); border-color: rgba(140,110,255,0.4); color: #fff; }
+  .qm-divider { text-align: center; font-size: 12px; color: rgba(200,192,240,0.35); margin: 6px 0; font-family: var(--mono); }
 
   /* PROGRESS BAR */
   .progress-wrap { margin-bottom: 24px; }
@@ -495,11 +579,8 @@ function startMode(m){
 }
 
 function updateBatch(val){
-  examBatch=parseInt(val);
-  const bv=document.getElementById('batchVal');
-  const bd=document.getElementById('batchDesc');
-  if(bv) bv.textContent=val;
-  if(bd) bd.textContent=val;
+  const n=parseInt(val);
+  if(n>=5&&n<=ALL_QUESTIONS.length) examBatch=n;
 }
 
 function selectAnswer(qi,oi){
@@ -532,27 +613,19 @@ function updateHeader(){
 
 function renderStart(){
   return`<div class="start-screen">
-    <div class="start-title">Tipo Test<br><em>FIS 25·26</em></div>
-    <p class="start-sub">${ALL_QUESTIONS.length} preguntas · Elige un modo para empezar</p>
-    <div class="custom-selector">
-      <label>Preguntas del examen simulado <span>→ <strong id="batchVal">${examBatch}</strong></span></label>
-      <div class="slider-wrapper">
-        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">5</span>
-        <input class="custom-slider" type="range" min="5" max="${ALL_QUESTIONS.length}" step="5" value="${examBatch}" oninput="updateBatch(this.value)">
-        <span style="font-family:var(--mono);font-size:12px;color:var(--muted)">${ALL_QUESTIONS.length}</span>
+    <div class="quiz-card">
+      <div class="qm-title">Test FIS 25·26</div>
+      <div class="qm-field">
+        <label class="qm-label">Número de preguntas</label>
+        <input class="qm-input" type="number" min="5" max="${ALL_QUESTIONS.length}" step="5" value="${examBatch}" id="batchInput" oninput="updateBatch(this.value)">
       </div>
-    </div>
-    <div class="mode-grid">
-      <div class="mode-card" onclick="startMode('exam')">
-        <div class="mode-icon">🎯</div>
-        <div class="mode-name">Examen simulado</div>
-        <div class="mode-desc"><span id="batchDesc">${examBatch}</span> preguntas aleatorias. Sin pistas. Resultado al final.</div>
+      <div class="qm-checkrow">
+        <label class="qm-check"><input type="checkbox" id="chkFeedback" checked> Mostrar respuestas</label>
+        <label class="qm-check"><input type="checkbox" id="chkShuffle" checked> Aleatorias</label>
       </div>
-      <div class="mode-card" onclick="startMode('practice')">
-        <div class="mode-icon">📚</div>
-        <div class="mode-name">Práctica libre</div>
-        <div class="mode-desc">Todas las preguntas con feedback inmediato tras cada respuesta.</div>
-      </div>
+      <button class="qm-btn-start" onclick="startMode('exam')">🎯 Empezar examen</button>
+      <div class="qm-divider">— o —</div>
+      <button class="qm-btn-practice" onclick="startMode('practice')">📚 Práctica libre · ${ALL_QUESTIONS.length} preguntas con feedback</button>
     </div>
   </div>`;
 }
@@ -629,7 +702,11 @@ function renderResults(){
 function render(){
   const app=document.getElementById('app');
   updateHeader();
-  if(!questions.length){app.innerHTML=renderStart();return;}
+  if(!questions.length){
+    document.body.classList.add('on-start');
+    app.innerHTML=renderStart();return;
+  }
+  document.body.classList.remove('on-start');
   if(mode==='exam'&&Object.keys(answers).length===questions.length){
     app.innerHTML=renderResults();return;
   }
