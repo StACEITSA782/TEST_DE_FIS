@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tipo Test FIS ACTUALIZADO - 25/26</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f11;
+    --surface: #18181c;
+    --surface2: #222228;
+    --border: #2e2e38;
+    --accent: #7c6af7;
+    --accent-light: #a89af9;
+    --green: #3ecf8e;
+    --green-bg: #0d2a1f;
+    --red: #f87171;
+    --red-bg: #2a0d0d;
+    --text: #e8e8f0;
+    --muted: #8888a0;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    padding: 0;
+  }
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent-light);
+    letter-spacing: 0.05em;
+  }
+  .logo span { color: var(--muted); }
+  .header-stats {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .stat-badge {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+  }
+  .stat-badge.ok { color: var(--green); border-color: #1e4d38; background: var(--green-bg); }
+  .stat-badge.ko { color: var(--red); border-color: #4d1e1e; background: var(--red-bg); }
+
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* START SCREEN */
+  .start-screen { text-align: center; padding: 60px 20px; }
+  .start-title {
+    font-family: var(--mono);
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .start-title em { color: var(--accent-light); font-style: normal; }
+  .start-sub { font-size: 15px; color: var(--muted); margin-bottom: 48px; }
+  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 520px; margin: 0 auto; }
+  .mode-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .mode-card:hover { border-color: var(--accent); background: var(--surface2); }
+  .mode-icon { font-size: 28px; margin-bottom: 12px; }
+  .mode-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .mode-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* PROGRESS BAR */
+  .progress-wrap { margin-bottom: 24px; }
+  .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .progress-label { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .progress-track { height: 3px; background: var(--border); border-radius: 2px; }
+  .progress-fill { height: 3px; background: var(--accent); border-radius: 2px; transition: width 0.3s ease; }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .q-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .q-text { font-size: 17px; line-height: 1.6; font-weight: 500; margin-bottom: 24px; }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.12s;
+    background: var(--bg);
+  }
+  .option:hover:not(.disabled) { border-color: var(--accent); background: #1a1830; }
+  .option.selected { border-color: var(--accent); background: #1a1830; }
+  .option.correct { border-color: var(--green); background: var(--green-bg); }
+  .option.wrong { border-color: var(--red); background: var(--red-bg); }
+  .option.disabled { cursor: default; }
+  .opt-key {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.12s;
+  }
+  .option.selected .opt-key { border-color: var(--accent); color: var(--accent-light); }
+  .option.correct .opt-key { border-color: var(--green); color: var(--green); background: rgba(62,207,142,0.1); }
+  .option.wrong .opt-key { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.1); }
+  .opt-text { font-size: 14px; line-height: 1.5; }
+
+  .feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: var(--green-bg); border: 1px solid #1e4d38; color: var(--green); }
+  .feedback.ko { background: var(--red-bg); border: 1px solid #4d1e1e; color: #f9a8a8; }
+  .feedback strong { color: var(--text); }
+
+  /* NAV */
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .btn {
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.12s;
+    font-weight: 500;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent-light); }
+  .btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn.primary:hover { background: #6a58e5; border-color: #6a58e5; color: white; }
+  .btn.ghost { background: transparent; border-color: transparent; color: var(--muted); font-size: 13px; }
+  .btn.ghost:hover { color: var(--text); border-color: transparent; }
+
+  /* RESULTS */
+  .results-header {
+    text-align: center;
+    padding: 48px 24px 36px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  .big-score {
+    font-family: var(--mono);
+    font-size: 72px;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .big-score.pass { color: var(--green); }
+  .big-score.fail { color: var(--red); }
+  .big-score.mid { color: #fbbf24; }
+  .score-label { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+  .score-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .score-pill {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+  .score-pill.ok { background: var(--green-bg); color: var(--green); border: 1px solid #1e4d38; }
+  .score-pill.ko { background: var(--red-bg); color: var(--red); border: 1px solid #4d1e1e; }
+  .score-pill.sk { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+  .result-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* REVIEW */
+  .review-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 32px;
+  }
+  .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter-btn {
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .filter-btn:hover { color: var(--text); border-color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+  .review-item {
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-left-width: 3px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: var(--surface);
+  }
+  .review-item.ok { border-left-color: var(--green); }
+  .review-item.ko { border-left-color: var(--red); }
+  .review-q { font-size: 14px; font-weight: 500; margin-bottom: 6px; line-height: 1.5; }
+  .review-ans { font-size: 13px; color: var(--muted); }
+  .review-ans .right { color: var(--green); font-weight: 500; }
+  .review-ans .wrong-txt { color: var(--red); }
+
+  /* BACK BTN */
+  .back-row { margin-bottom: 20px; }
+
+  @media (max-width: 500px) {
+    .mode-grid { grid-template-columns: 1fr; }
+    .q-text { font-size: 15px; }
+    .big-score { font-size: 52px; }
+    header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">test<span>/</span>FIS <span>— 25·26</span></div>
+  <div class="header-stats" id="headerStats"></div>
+</header>
+
+<main id="app"></main>
+
+<script>
+const ALL_QUESTIONS = [
+{q:"¿Qué significa la «reutilización» en el contexto de una metodología?",opts:["Uso de código de terceros sin licencia","Descartar componentes","Creación de productos nuevos","Uso de productos de trabajo ya existentes"],ans:3},
+{q:"¿Cómo se relacionan las «Actividades» y las «Tareas» en MÉTRICA 3.0?",opts:["Las actividades son independientes de las tareas","No hay relación","Las actividades son más pequeñas que las tareas","Las tareas son parte de una actividad"],ans:3},
+{q:"¿Qué es una «tarea» en el desarrollo de software?",opts:["Un conjunto de tareas que se realiza con un propósito específico","Una fase del proyecto","Una unidad elemental de trabajo que puede ser administrada","Un problema sin resolver"],ans:2},
+{q:"¿Cuál es la función principal del software de sistema?",opts:["Gestionar los recursos del hardware","Editar imágenes y vídeos","Crear documentos y presentaciones","Programar aplicaciones"],ans:0},
+{q:"¿Para qué se utiliza UML principalmente?",opts:["Programar software","Probar sistemas","Gestionar proyectos","Modelar sistemas software"],ans:3},
+{q:"¿Qué tipo de iteraciones utiliza XP?",opts:["Basadas en cascada","Cortas y frecuentes","Largas y rígidas","Sin planificación"],ans:1},
+{q:"¿Cómo se clasifican tradicionalmente las herramientas CASE según la fase del ciclo de vida que soportan?",opts:["Herramientas de frontend vs backend","Upper CASE vs Lower CASE","Herramientas para equipos grandes vs pequeños","Herramientas ágiles vs tradicionales"],ans:1},
+{q:"En un diagrama de secuencia UML, ¿qué representa un rectángulo estrecho sobre la línea de vida?",opts:["El momento de creación de un objeto","La línea de vida del objeto en el tiempo","Que el objeto está activo o ejecutando una operación","La duración total de ejecución del sistema completo"],ans:2},
+{q:"¿Qué relación guarda el modelo evolutivo con los modelos ágiles?",opts:["Es más rígido","Son opuestos","Ninguna","En su base conceptual"],ans:3},
+{q:"¿Qué significa que un requisito sea «verificable»?",opts:["Que puede implementarse con tecnología actual","Que no contradice otros requisitos","Que existe una prueba objetiva para confirmar su cumplimiento","Que el cliente lo ha firmado en un contrato"],ans:2},
+{q:"¿Cuál es la definición de un Proceso de desarrollo de software?",opts:["Una herramienta específica para escribir código fuente","Un marco de trabajo que define actividades, acciones y tareas para construir software de alta calidad","El lenguaje de programación elegido para el proyecto","Una representación simplificada de un sistema real"],ans:1},
+{q:"¿Qué se espera obtener al final de la fase de Inicio de RUP?",opts:["La base de datos migrada con datos reales","Una visión del proyecto, un caso de negocio y un alcance básico","El código fuente completo y probado"],ans:1},
+{q:"¿Qué capturan los «Diagramas de Actividad» de UML?",opts:["El comportamiento dinámico mostrando el flujo de trabajo o control entre actividades","Los requisitos funcionales desde el punto de vista del usuario","El comportamiento dinámico mostrando la secuencia cronológica de mensajes entre objetos","La estructura estática en términos de clases, atributos y relaciones"],ans:0},
+{q:"¿Quién es responsable de maximizar el valor de producto?",opts:["Equipo de Desarrollo","Product Owner","Scrum Master","Jefe de Proyecto"],ans:1},
+{q:"En un Diagrama de Clases UML, ¿qué indica el símbolo «#» antes de un atributo?",opts:["Público","Constante","Privado","Protegido"],ans:3},
+{q:"¿En qué contexto histórico surge la Ingeniería del Software como disciplina?",opts:["Con la aparición de Internet","Con la llegada de la IA","En la era de la computación en la nube","Como respuesta a la «crisis del software» en los años 60"],ans:3},
+{q:"¿Qué condición favorece el uso de RAD?",opts:["Alta regulación legal","Sistemas críticos","Requisitos bien acotados","Equipos muy dispersos"],ans:2},
+{q:"¿Qué ventaja aporta dividir el desarrollo en fases?",opts:["Eliminar errores automáticamente","Reducir la comunicación","Evitar la participación del cliente","Facilitar el control, planificación y calidad del proyecto"],ans:3},
+{q:"¿Qué componente NO forma parte del cuerpo de conocimiento de la Ingeniería del Software?",opts:["Gestión de proyectos de software","Diseño de software","Calidad de software","Mantenimiento de hardware"],ans:3},
+{q:"¿Qué práctica de XP asegura que el código se mantenga limpio?",opts:["Refactorización","Prototipado","Diseño detallado inicial","Auditoría externa"],ans:0},
+{q:"¿Qué es el CMM (Capability Maturity Model) del SEI?",opts:["Un modelo de madurez con 5 niveles para un proceso software","Una herramienta de diseño","Una metodología de programación","Un estándar de documentación"],ans:0},
+{q:"¿Cuál no es un objetivo fundamental de la medición en Ingeniería del Software?",opts:["Permitir controlar qué ocurre en un proyecto","Ayudar a entender qué pasa durante el desarrollo","Reducir la complejidad algorítmica en el desarrollo","Poder mejorar un proceso software"],ans:2},
+{q:"¿Qué métrica se relaciona con productividad?",opts:["Líneas de código/persona-mes","Fallos/1000 líneas de código","Costo/hora-programador","Nivel de robustez del software"],ans:0},
+{q:"¿Cuál de los siguientes NO es uno de los 12 principios del Manifiesto Ágil?",opts:["Aceptación de cambios en requisitos incluso tardíamente","Los procesos y herramientas son más importantes que individuos e interacciones","Los mejores diseños emergen de equipos autoorganizados","El negocio y los desarrolladores deben trabajar juntos diariamente"],ans:1},
+{q:"¿Cuál es una de las ventajas de los modelos evolutivos?",opts:["Son fáciles de planificar","Son rígidos a los cambios","Son flexibles y se pueden adaptar rápidamente a las necesidades del cliente","Reducen los riesgos al inicio del proyecto"],ans:2},
+{q:"¿Qué característica define al software?",opts:["Consume electricidad directamente","Se puede tocar","Se desgasta con el uso","Es lógico e intangible"],ans:3},
+{q:"En el Proceso Unificado (UP), ¿qué sucede durante la fase de «Elaboración»?",opts:["Se escribe todo el código sin diseño previo","Se establece la arquitectura base y se mitigan los riesgos técnicos más significativos","Se eliminan los requisitos difíciles de programar","Se realiza el cierre definitivo del contrato con el cliente"],ans:1},
+{q:"¿Qué tipo de usuario participa activamente en el modelo RAD?",opts:["Auditores","Usuarios finales","Solo programadores","Solo testers"],ans:1},
+{q:"¿Qué tipo de participante de MÉTRICA 3.0 incluye al «Consultor Informático» y al «Técnico de Sistemas»?",opts:["Consultor","Jefe de Proyecto","Analista","Programador"],ans:0},
+{q:"El proceso de verificar que el software cumple las expectativas del cliente antes de su entrega final ocurre en",opts:["El Análisis","Las pruebas","El Diseño","El Mantenimiento"],ans:1},
+{q:"¿Qué característica del producto software se refiere a la «Confiabilidad»?",opts:["La capacidad del software para realizar sus funciones bajo condiciones específicas por un periodo de tiempo","La facilidad con la que un sistema puede ser modificado para corregir errores","La facilidad con la que el software se puede instalar en un teléfono móvil","La rapidez con la que el programa realiza un cálculo matemático"],ans:0},
+{q:"¿Cómo se define el atributo de «Confiabilidad»?",opts:["La rapidez con la que el sistema responde a una petición","La capacidad del código para ser leído por distintos programadores","La probabilidad de que el software realice sus funciones críticas sin fallos durante un tiempo determinado","La protección del software frente a ataques externos"],ans:2},
+{q:"¿Quién prioriza el Product Backlog?",opts:["Cliente","Scrum Master","Equipo de Desarrollo","Product Owner"],ans:3},
+{q:"En un Diagrama de Clases UML, ¿qué relación se representa con un rombo vacío en el extremo de la «clase todo»?",opts:["Composición","Agregación","Generalización","Dependencia"],ans:1},
+{q:"¿Qué caracteriza a un «Proceso Ágil» de desarrollo?",opts:["Realizar una única entrega al finalizar el proyecto","El desarrollo iterativo e incremental centrado en la entrega de valor y la respuesta al cambio","La incorporación sistemática del análisis de riesgos en cada iteración","La creación de manuales antes de empezar a programar"],ans:1},
+{q:"¿Qué ventaja ofrece la utilización de Casos de Uso en UML?",opts:["Desvincula el sistema de las necesidades del negocio","Limita la comunicación con el cliente","Reduce la flexibilidad del diseño","Permite centrar el esfuerzo en los requisitos del usuario"],ans:3},
+{q:"¿Qué diferencia existe entre «programa» y «software»?",opts:["Un programa es código fuente; software es solo código binario","Un programa es un conjunto específico de instrucciones; software es un concepto más amplio que incluye programas, datos, documentación y procedimientos","El software requiere compilación; los programas siempre son interpretados","No existe diferencia; ambos son sinónimos según ISO"],ans:1},
+{q:"¿Cuál es un ejemplo de calidad interna?",opts:["Estructura del código","Satisfacción del usuario","Tiempo de respuesta real","Facilidad de uso"],ans:0},
+{q:"¿Cuál es un ejemplo de calidad externa?",opts:["Comentarios","Rendimiento observado","Modularidad","Estilo del código"],ans:1},
+{q:"¿Cuál de los siguientes es un ejemplo de software de programación?",opts:["Sistema operativo","Navegador web","Compilador","Hoja de cálculo"],ans:2},
+{q:"¿Qué familia metodológica es más adecuada para requisitos cambiantes?",opts:["Estructurada","Ágil","Formal","Tradicional"],ans:1},
+{q:"¿Cuál de las siguientes afirmaciones sobre el desarrollo evolutivo es falsa?",opts:["Permite adaptarse a cambios en requisitos","El código del prototipo inicial suele formar parte del producto final","Es adecuado para dominios poco explorados o innovadores","Requiere que todos los requisitos estén 100% definidos antes de la primera iteración"],ans:3},
+{q:"¿Qué representan las acciones en un diagrama de actividades UML?",opts:["Un paso de una actividad","Una bifurcación","El flujo de control","El inicio del proceso"],ans:0},
+{q:"¿Qué fase genérica suele cerrar el ciclo de vida del software?",opts:["Construcción","Implantación","Mantenimiento","Pruebas"],ans:2},
+{q:"¿Qué modelan los diagramas estructurales en UML?",opts:["Los cambios de estado de los objetos","El comportamiento dinámico del sistema","La secuencia de eventos","La estructura estática del sistema y relación entre los objetos"],ans:3},
+{q:"En UML, un actor representa",opts:["Un módulo","Una clase","Una persona o sistema externo","Un método"],ans:2},
+{q:"¿Qué es un código heredado en una empresa?",opts:["Un conjunto de leyes que regulan el uso de software","Un código tan perfecto que nadie se atreve a tocarlo","Software gratuito que la empresa recibe como herencia","Un código antiguo, a menudo sin documentación, que es difícil y arriesgado de mantener"],ans:3},
+{q:"¿Cómo se relacionan objetivos, requerimientos y actividades en un proyecto?",opts:["Las actividades definen los objetivos","Los objetivos definen qué se quiere lograr, los requerimientos qué debe hacer el sistema y las actividades cómo se construye","Son elementos independientes sin relación","Las restricciones eliminan las actividades"],ans:1},
+{q:"¿Qué son las «herramientas» en el desarrollo de software?",opts:["Programas que mecanizan los métodos y las técnicas y dan soporte al proceso de desarrollo","Un conjunto de varios métodos con una filosofía común","Bienes que se emplean para realizar actividades","Una secuencia de pasos ordenados para realizar una actividad específica"],ans:0},
+{q:"Un análisis de viabilidad evalúa principalmente",opts:["Si el proyecto es viable técnicamente, económicamente, operativamente y legalmente antes de comprometer recursos significativos","Si el producto competirá en el mercado global","Si el equipo domina el lenguaje de programación elegido","Si el código cumplirá estándares ISO"],ans:0},
+{q:"¿Cuál es la diferencia entre la Ingeniería del Software y las Ciencias de la Computación?",opts:["Las ciencias de la computación surgieron en el siglo XXI","Las ciencias de la computación son matemática pura sin aplicación práctica","La ingeniería del software no requiere matemáticas","Las ciencias de la computación se centran en fundamentos teóricos; la ingeniería del software aplica principios sistemáticos para construir software confiable en entornos reales"],ans:3},
+{q:"¿Cuál es el objetivo primordial de la Ingeniería del Software como disciplina?",opts:["Crear el código más complejo posible","Eliminar la interacción entre cliente y programadores","Minimizar el uso de documentación","Producir software de alta calidad, útil, entregado a tiempo y dentro del presupuesto"],ans:3},
+{q:"En un Diagrama de Casos de Uso UML, ¿cómo se representa la relación «include»?",opts:["Línea discontinua con flecha hueca y el texto <<extend>>","Línea continua con rombo en un extremo","Línea discontinua con flecha sólida y el texto <<include>>","Línea discontinua con flecha hueca y el texto <<include>>"],ans:3},
+{q:"¿Cuál de las siguientes es una notación ampliamente utilizada para el modelado de software?",opts:["SQL","UML","Python","HTML"],ans:1},
+{q:"En los Diagramas de Actividades UML, ¿cómo se representa una bifurcación de flujo concurrente?",opts:["Barra horizontal o vertical gruesa con una entrada y múltiples salidas","Rombo con una entrada y múltiples salidas","Flecha que se divide","Círculo dividido"],ans:0},
+{q:"¿Qué caracteriza el Nivel 1 del CMM?",opts:["Se gestionan los riesgos","El proceso software es caótico y no existen procedimientos estandarizados","El proceso software está documentado","Se utiliza un proceso definido"],ans:1},
+{q:"¿Cómo se diferencia la Ingeniería del Software de las Ciencias de la Computación?",opts:["Las Ciencias de la Computación se centran en la aplicación industrial","La Ingeniería del Software se centra en la teoría matemática","Las Ciencias de la Computación se enfocan más en teoría y fundamentos; la Ingeniería del Software en la construcción en contextos reales","No hay ninguna diferencia"],ans:2},
+{q:"¿Qué tipo de diagramas describe la estructura del sistema?",opts:["Funcionales","Estructurales","De comportamiento","Dinámicos"],ans:1},
+{q:"¿Cuál es una de las ventajas del modelo de cascada?",opts:["Es flexible a los cambios","Reduce la necesidad de documentación","Favorece la participación del cliente","Es sencillo de entender y usar"],ans:3},
+{q:"¿Qué representa un nodo de combinación en un diagrama de actividades UML?",opts:["La división de un flujo en múltiples flujos concurrentes","Un punto con dos o más alternativas","Una convergencia de caminos alternativos en un solo flujo","La convergencia de múltiples flujos concurrentes en un solo flujo"],ans:3},
+{q:"¿Por qué es fundamental la participación del «Cliente» aunque no sea el usuario final?",opts:["Porque construye el modelo del dominio del problema","Porque realiza las copias de seguridad diarias","Porque tiene la visión de negocio, define los objetivos generales y financia el proyecto","Porque instala físicamente el software"],ans:2},
+{q:"¿Qué representa el MSI de MÉTRICA 3.0?",opts:["El proceso de gestión de las modificaciones de un sistema ya existente para corregir errores, adecuarlo a nuevas necesidades o mejorarlo","El estudio de la situación actual y la planificación de las actuaciones a nivel de SI","La justificación de la nueva propuesta de sistema","El proceso de desarrollo y puesta en marcha del sistema"],ans:0},
+{q:"¿Qué producto se obtiene típicamente del análisis del sistema?",opts:["Modelo del sistema actual y propuesto","Plan del proyecto","Manual de usuario","Código fuente"],ans:0},
+{q:"¿Cuál es un efecto común de la comunicación deficiente entre equipos de desarrollo y clientes?",opts:["Entregas que cumplen perfectamente con las expectativas","Simplificación de la fase de pruebas","Reducción del número de reuniones","Malentendidos en requisitos, retrabajos costosos y productos que no resuelven necesidades reales"],ans:3},
+{q:"¿Cómo se define la «Corrección» como atributo del software?",opts:["El precio del software en relación con su utilidad","La rapidez con la que el software responde","El grado en que un programa satisface sus especificaciones y objetivos del usuario","La ausencia de comentarios en el código fuente"],ans:2},
+{q:"¿Quiénes diseñan y construyen el software?",opts:["Los ingenieros de software","Los administradores de sistemas","Los usuarios finales","Los analistas de datos"],ans:0},
+{q:"¿Por qué el mantenimiento es a menudo la fase más larga y costosa?",opts:["Porque hay que predecir el esfuerzo, tiempo y recursos necesarios","Porque el software debe seguir funcionando y adaptándose durante toda su vida útil","Porque los servidores consumen más luz con el tiempo","Porque los programadores trabajan menos horas en esta fase"],ans:1},
+{q:"¿Qué es un «requerimiento funcional»?",opts:["Una herramienta de desarrollo","Un área de funcionalidad que debe soportar el sistema","Una restricción sobre el funcionamiento del sistema","Un objetivo de alto nivel"],ans:1},
+{q:"¿Qué es un prototipo?",opts:["Un diseño definitivo","Un modelo parcial del sistema","El sistema final","Un plan del proyecto"],ans:1},
+{q:"¿Qué artefacto hace visible el trabajo pendiente?",opts:["Retrospectiva","Incremento","Product Backlog","Sprint Review"],ans:2},
+{q:"¿Qué ventaja principal ofrecen los modelos de proceso ágiles?",opts:["Menos pruebas","Adaptación rápida al cambio","Control rígido","Menor comunicación"],ans:1},
+{q:"¿Qué indica una línea discontinua con una flecha abierta en un Diagrama de Clases UML?",opts:["Una relación de dependencia","Una relación de composición","Una relación de herencia","Una asociación bidireccional"],ans:0},
+{q:"¿Cuál es el objetivo de las «Pruebas de Integración»?",opts:["Verificar que los diferentes módulos funcionan bien cuando trabajan juntos","La verificación de un módulo individual de forma aislada","Integrar a nuevos programadores en el equipo","Una prueba que se hace a todo el sistema a la vez"],ans:0},
+{q:"Según su función, ¿qué tipo de software actúa como intermediario entre hardware y aplicaciones de usuario?",opts:["Software embebido","Software de aplicación","Software de sistema","Software de programación"],ans:2},
+{q:"¿Qué tipo de entidad suele evaluarse con CMM o SPICE?",opts:["Requisitos","Producto software","Organización o proceso","Código fuente"],ans:2},
+{q:"¿Qué relación tiene MÉTRICA v3 con estándares de calidad?",opts:["Es incompatible","No considera la calidad","Sustituye a ISO 9000","Es coherente con ISO y modelos de calidad"],ans:3},
+{q:"¿Qué enfoque metodológico propone Barry Boehm para gestionar riesgos mediante ciclos iterativos?",opts:["Modelo de desarrollo formal","Modelo en cascada adaptativo","Extreme Programming","Modelo en espiral"],ans:3},
+{q:"En un Diagrama de Clases UML, ¿qué relación se representa mediante una flecha sólida con punta de flecha cerrada?",opts:["Agregación","Dependencia","Composición","Generalización"],ans:3},
+{q:"¿Cómo se manejan los cambios de requisitos en Scrum?",opts:["Se incorporan al Product Backlog","Se documentan sin aplicar","Se posponen al final","Se aplican sin control"],ans:0},
+{q:"¿Qué metodologías surgieron para responder a los cambios rápidos en los requisitos?",opts:["Metodologías ágiles","Metodologías sin interacción con el cliente","Metodologías en cascada rígidas","Metodologías sin planificación"],ans:0},
+{q:"¿Qué capturan los «Diagramas de Objetos» de UML?",opts:["El comportamiento dinámico centrándose en interacciones entre objetos y sus relaciones","La organización y dependencias entre los componentes físicos","El comportamiento dinámico mostrando el ciclo de vida de los objetos","La estructura estática mostrando objetos y sus relaciones en un momento determinado"],ans:3},
+{q:"¿Cuál de las siguientes no es una fase del DSI en MÉTRICA v3?",opts:["Análisis de Sistemas","Pruebas del Sistema","Gestión de Requisitos","Estudio de Viabilidad del Sistema"],ans:2},
+{q:"¿Qué papel tiene el usuario en los modelos ágiles?",opts:["Solo al final","Solo al inicio","Feedback tras cada entrega","Nulo"],ans:2},
+{q:"¿Cuál es el objetivo principal del XP?",opts:["Diseñar todo el sistema al inicio del proyecto","Evitar la refactorización","Reducir la comunicación con el cliente","Mejorar la calidad del software y adaptarse al cambio"],ans:3},
+{q:"¿Qué artefacto Scrum muestra el trabajo planificado para el Sprint actual?",opts:["Incremento","Release Plan","Sprint Backlog","Product Backlog"],ans:2},
+{q:"En un Diagrama de Casos de Uso de UML, ¿es correcto que un actor se relacione con otro actor?",opts:["Sí, mediante generalización","No, los actores solo se relacionan con casos de uso","Sí, mediante una asociación","Solo si representan roles complementarios"],ans:0},
+{q:"En función de la forma de generarlos, ¿cuál es una diferencia clave entre software y hardware?",opts:["El software se desarrolla o se construye lógicamente, no se manufactura en el sentido clásico","El software no requiere un diseño previo","El software se fabrica en una línea de montaje y el hardware se programa","El hardware nunca falla, mientras que el software falla constantemente"],ans:0},
+{q:"El modelo Incremental es útil cuando",opts:["El presupuesto es ilimitado","No se tiene prisa por entregar nada","El proyecto es extremadamente pequeño","No se dispone de todo el personal desde el inicio pero se quiere entregar algo rápido"],ans:3},
+{q:"¿Qué priorizan las metodologías ágiles frente a las pesadas?",opts:["Documentación detallada","Planificación a largo plazo","Modelado formal","Adaptación al cambio"],ans:3},
+{q:"Un requisito que indica «el sistema debe permitir el registro de usuarios» es de tipo",opts:["Requisito de presupuesto","Requisito de mantenimiento","Requisito no funcional","Requisito funcional"],ans:3},
+{q:"¿Cuál es una limitación de Scrum?",opts:["Dificultad en entornos muy regulados","No permite cambios","No tiene roles","No mejora la calidad"],ans:0},
+{q:"¿Cuál es el nivel más bajo de CMM?",opts:["Inicial","Repetible","Definido","Controlado"],ans:0},
+{q:"¿Cuál es la principal diferencia entre método y metodología?",opts:["La metodología integra métodos, técnicas y herramientas","El método solo se usa en modelos ágiles","No existe diferencia","El método es más general que la metodología"],ans:0},
+{q:"En los Diagramas de Actividades UML, ¿qué elemento se usa para sincronizar flujos concurrentes?",opts:["Barra horizontal o vertical gruesa","Rectángulo con doble borde","Rombo","Círculo negro"],ans:0},
+{q:"¿Qué actividad se realiza en la construcción del software?",opts:["Definición de requisitos","Análisis del sistema","Codificación e integración","Planificación"],ans:2},
+{q:"¿Qué actividad del proceso software busca detectar errores antes de la entrega?",opts:["Planificación","Codificación","Pruebas","Mantenimiento"],ans:2},
+{q:"¿En qué consiste la «Certificación de Software»?",opts:["El registro de la marca en la oficina de patentes","Un proceso de verificación externa que garantiza que el software cumple con estándares de calidad o seguridad","La firma digital que impide que el software sea copiado","Asegurar que el programador tiene un título universitario"],ans:1},
+{q:"¿Qué avance fue clave para mejorar la productividad en el desarrollo de software?",opts:["Programación sin documentación","Uso exclusivo del lenguaje máquina","Aparición de lenguajes de alto nivel","Programación sin pruebas"],ans:2},
+{q:"¿Qué característica define fundamentalmente a un «modelo de proceso de software»?",opts:["Determina la arquitectura técnica del producto final","Define exclusivamente las pruebas que deben realizarse","Describe las fases, actividades, artefactos y relaciones temporales del desarrollo de software","Especifica el lenguaje de programación que debe usarse"],ans:2},
+{q:"Se dice que un proceso es «Confiable» cuando",opts:["Utiliza exclusivamente herramientas de código abierto","Es capaz de prevenir errores humanos o al menos detectarlos antes de que afecten al producto final","El presupuesto es ilimitado","El proceso nunca cambia, independientemente del proyecto"],ans:1},
+{q:"¿Qué mide la «longitud» en métricas de software?",opts:["El tiempo de ejecución","El tamaño del producto (longitud del código fuente)","El número de errores","El número de personas en el equipo"],ans:1},
+{q:"El «Plan de Pruebas» en MÉTRICA v3 debe empezar a definirse en",opts:["Las fases de Análisis y Diseño, de forma paralela a la especificación","La fase de planificación estratégica (PSI)","Justo antes de entregar el software al cliente","La fase de mantenimiento"],ans:0},
+{q:"¿Qué problema busca resolver la ingeniería del software?",opts:["El exceso de usuarios","La falta de control, calidad y planificación en el desarrollo de software","El exceso de potencia de los ordenadores","El uso de demasiados lenguajes de programación"],ans:1},
+{q:"¿Cuál de los siguientes es un ejemplo de software de aplicación?",opts:["Compilador","Controlador de dispositivo","Sistema operativo","Procesador de textos"],ans:3},
+{q:"¿Qué es un «modelo» en el contexto de la Ingeniería del Software?",opts:["Un producto final entregable","Un manual de instrucciones","La realidad subyacente de un sistema","Cualquier abstracción de la realidad"],ans:3},
+{q:"¿Cuál de las siguientes NO es una categoría principal de software?",opts:["Software de sistema","Software embebido","Software de aplicación","Software de hardware"],ans:3},
+{q:"¿Qué característica indica que el software cumple exactamente con los requisitos especificados?",opts:["Corrección","Robustez","Eficiencia","Confiabilidad"],ans:0},
+{q:"En un Diagrama de Casos de Uso UML, ¿qué relación indica «include»?",opts:["Comportamiento opcional","Reutilización obligatoria","Exclusión","Especialización"],ans:1},
+{q:"En un Diagrama de Casos de Uso UML, ¿cómo se representa la relación «extend»?",opts:["Línea discontinua con flecha hueca y el texto <<extend>>","Línea continua con rombo en un extremo","Línea discontinua con flecha sólida y el texto <<extend>>","Línea continua con flecha hueca y el texto <<extend>>"],ans:0},
+{q:"¿Qué actividad se enfatiza más en metodologías tradicionales?",opts:["Adaptación continua","Comunicación informal","Prototipado rápido","Documentación"],ans:3},
+{q:"En un Diagrama de Casos de Uso UML, ¿cómo se representa la relación «include»? (notación)",opts:["Línea discontinua con flecha hueca y el texto <<include>>","Línea continua con rombo en un extremo","Línea discontinua con flecha sólida y el texto <<include>>","Línea continua con flecha hueca y el texto <<include>>"],ans:0},
+{q:"¿Para qué se utilizan los modelos durante la resolución de problemas de software?",opts:["Para realizar pruebas finales","Para comprobar, analizar y proponer soluciones antes de implementar","Para eliminar la necesidad de documentación","Para sustituir el código final"],ans:1},
+{q:"¿Qué no se puede modelar directamente con un diagrama de actividades UML?",opts:["Algoritmos complejos","Actividades concurrentes","Estados internos persistentes de un objeto","Procesos con decisiones condicionales"],ans:2},
+{q:"¿Qué afirmación sobre XP es correcta?",opts:["XP no permite cambios en los requisitos durante una iteración","XP promueve el diseño emergente guiado por pruebas y refactorización","XP elimina la necesidad de arquitectura previa","XP prohíbe completamente la documentación"],ans:1},
+{q:"¿Cuál es un ejemplo de requisito funcional?",opts:["El sistema debe generar facturas","Mantenibilidad","Establecer el tiempo de respuesta","Seguridad"],ans:0},
+{q:"¿A qué hace referencia la palabra software?",opts:["A los programas y toda la información asociada y materiales necesarios para soportar su instalación, operación, reparación y mejora","Exclusivamente el código de programación","Solo a los datos tratados","A los ingenieros de software"],ans:0},
+{q:"¿Qué puede provocar una mala comunicación entre el equipo de desarrollo y el cliente?",opts:["Software que no cumple las expectativas","Mayor reutilización del software","Mejor documentación","Menor número de errores"],ans:0},
+{q:"¿Cuál no es una característica de RUP?",opts:["Es evolutivo y flexible para asimilar cambios","Pautas rígidas y sin flexibilidad","Enfoque de alta colaboración","Pautas muy concretas para el desarrollo"],ans:1},
+{q:"¿Qué característica del proceso software permite adaptarse a cambios sin perder control?",opts:["Improvisación","Informalidad","Robustez","Rigidez"],ans:2},
+{q:"¿Cuál es una característica del software embebido?",opts:["Está integrado en dispositivos electrónicos","Se ejecuta solo en ordenadores personales","Siempre tiene interfaz gráfica","Solo se usa para juegos"],ans:0},
+{q:"¿Cuál es el objetivo principal de las fases genéricas del desarrollo software?",opts:["Reducir el número de desarrolladores","Organizar el trabajo del proyecto de forma estructurada","Eliminar la necesidad de pruebas","Definir lenguajes de programación"],ans:1},
+{q:"Según el modelo CMM, un proceso «definido» (nivel 3) se caracteriza por",opts:["Estar estandarizado a nivel organizacional con activos de proceso reutilizables","Ser improvisado según las necesidades del momento","No requerir documentación alguna","Aplicarse solo a proyectos críticos"],ans:0},
+{q:"¿Qué es UML?",opts:["Un lenguaje de programación","Una base de datos","Una metodología de desarrollo","Un lenguaje de modelado gráfico estándar"],ans:3},
+{q:"¿Cuál de las siguientes es una herramienta de desarrollo de software?",opts:["Pruebas unitarias","Modelo en cascada","Análisis de requisitos","IDE (Entorno de Desarrollo Integrado)"],ans:3},
+{q:"UML se utiliza principalmente en",opts:["Análisis y diseño","Implantación","Fases de mantenimiento","Fases de pruebas"],ans:0},
+{q:"¿Qué atributo mide el uso adecuado de recursos como memoria y tiempo de CPU?",opts:["Robustez","Seguridad","Portabilidad","Eficiencia"],ans:3},
+{q:"¿Qué elemento no aparece en un diagrama de secuencia de UML?",opts:["Mensajes","Clases Abstractas","Objetos","Activaciones"],ans:1},
+{q:"¿Cuál de los siguientes es un ejemplo de «Software de Aplicación»?",opts:["El núcleo (Kernel) de Linux","El controlador (driver) de una impresora","Adobe Photoshop","Microsoft Windows 11"],ans:2},
+{q:"¿Qué característica define el ciclo de tiempo típico de un proyecto RAD?",opts:["Tiempo indefinido hasta que el cliente esté 100% satisfecho","1 año independientemente del alcance","Menos de 1 semana para cualquier tipo de sistema","Entre 60 y 90 días para aplicaciones de tamaño mediano"],ans:3},
+{q:"¿Qué perfil de participante de MÉTRICA 3.0 incluye al «Administrador de Bases de Datos» y al «Equipo de Arquitectura»?",opts:["Jefe de Proyecto","Responsable de Seguridad","Consultor","Analista"],ans:3},
+{q:"¿Qué significa «Estimar» en la fase de planificación?",opts:["Validar el funcionamiento aislado de un componente","Escribir el código de forma rápida","Predecir el esfuerzo, tiempo y recursos necesarios para completar el proyecto","Garantizar que el software cumple con los estándares de calidad"],ans:2},
+{q:"¿Qué significa CASE?",opts:["Code Analysis Software Engine","Computer Assisted System Execution","Computer Aided Software Engineering","Centralized Agile Software Engine"],ans:2},
+{q:"¿Qué criterio NO se usa para elegir una metodología?",opts:["Estabilidad de requisitos","Riesgo del proyecto","Lenguaje de programación a utilizar","Tipo de proyecto"],ans:2},
+{q:"¿En qué fase de RUP se define y valida la arquitectura base del sistema?",opts:["Elaboración","Construcción","Transición","Inicio"],ans:0},
+{q:"¿Qué se relaciona con la usabilidad?",opts:["Tiempo entre fallos","Número de defectos","Consumo de memoria","Curva de aprendizaje"],ans:3},
+{q:"¿Qué rol tiene el cliente en los modelos de proceso ágiles?",opts:["Pasivo","Solo al final","Solo al inicio","Participación continua"],ans:3},
+{q:"¿Qué significa la relación «include» en los Casos de Uso en UML?",opts:["Que un caso de uso precede a otro","Que un caso de uso es una especialización de otro","Que un caso agrega funcionalidad opcional a otro","Que un caso de uso incorpora explícitamente el comportamiento de otro caso de uso"],ans:3},
+{q:"¿Qué rol representa los intereses de los clientes?",opts:["Product Owner","Analista","Scrum Master","Equipo de Desarrollo"],ans:0},
+{q:"¿Qué es una actividad dentro de un proceso de Ingeniería del Software?",opts:["Un conjunto organizado de tareas relacionadas","Un requerimiento no funcional","Una acción puntual y atómica","Un producto final"],ans:0},
+{q:"¿Cuál es una ventaja clave del desarrollo incremental para el cliente?",opts:["Recibe documentación 10 veces más extensa","No necesita participar en reuniones de validación","Recibe valor funcional usable antes del final del proyecto y puede influir en incrementos posteriores","Paga menos por el proyecto completo"],ans:2},
+{q:"¿Para qué tipo de proyectos es adecuado el modelo cascada?",opts:["Proyectos que requieren mucha iteración","Proyectos con plazos de entrega muy ajustados","Proyectos donde los requisitos están bien definidos y son estables","Proyectos pequeños y con requisitos inciertos"],ans:2},
+{q:"¿Qué son los «Participantes» en MÉTRICA 3.0?",opts:["Las conexiones entre los diferentes procesos o entre los procesos y los elementos externos","Las acciones a realizar para alcanzar los objetivos del proyecto","Las personas y los roles que intervienen en el desarrollo y mantenimiento de los sistemas de información","Los documentos generados y las entregas del proyecto"],ans:2},
+{q:"¿Qué tipo de mantenimiento corrige errores?",opts:["Adaptativo","Preventivo","Evolutivo","Correctivo"],ans:3},
+{q:"¿Qué tipo de diagrama es el Diagrama de Clases en UML?",opts:["Un diagrama de interacción","Un diagrama de flujo","Un diagrama de comportamiento","Un diagrama estructural"],ans:3},
+{q:"¿Qué característica fundamental distingue el software del hardware?",opts:["El software se desgasta físicamente con el uso continuado","El software no puede modificarse una vez desplegado","El software es tangible y puede tocarse físicamente","El software no sufre desgaste físico pero puede contener defectos lógicos"],ans:3},
+{q:"¿Cuál de las siguientes no es una característica obligatoria de un incremento en Scrum?",opts:["Debe ser usable","Debe integrar todos los incrementos anteriores","Debe representar valor para el cliente","Debe estar desplegado en producción"],ans:3},
+{q:"¿Qué es una métrica de software?",opts:["Una herramienta","Una norma","Una medida cuantitativa de un atributo","Un proceso"],ans:2},
+{q:"¿Qué se entiende por confiabilidad en un producto software?",opts:["Que tenga muchas funciones","Que sea rápido","Que sea compatible con muchos sistemas","Que funcione correctamente durante un periodo de tiempo bajo condiciones determinadas"],ans:3},
+{q:"¿Qué desafío presenta la arquitectura en el desarrollo incremental si no se planifica?",opts:["Si la arquitectura inicial no anticipa futuros incrementos, puede requerir refactors costosos o reescrituras","La arquitectura solo se define en el último incremento","La arquitectura debe reescribirse completamente en cada incremento","No requiere arquitectura alguna"],ans:0},
+{q:"En UML, un actor representa (v2)",opts:["Un módulo","Un método","Una persona o sistema externo","Una clase"],ans:2},
+{q:"En un Diagrama de Casos de Uso UML, ¿qué relación se usa cuando varios casos comparten un comportamiento común?",opts:["Dependencia","Extend","Generalización entre casos de uso","Include"],ans:3},
+{q:"¿Qué fase se ocupa de corregir errores detectados por los usuarios una vez el software está en producción?",opts:["Análisis","Mantenimiento","Diseño","Construcción"],ans:1},
+{q:"Según su función, ¿cuál es la principal finalidad del software de sistema?",opts:["Gestionar los recursos del hardware y servir de base a otros programas","Crear contenido multimedia","Facilitar el aprendizaje","Desarrollar nuevas aplicaciones"],ans:0},
+{q:"¿En qué fase del DSI se generan los modelos de clase e interacción de objetos?",opts:["CSI","DSI","ASI","EVS"],ans:2},
+{q:"¿Cuál es la principal ventaja de los métodos formales?",opts:["Son muy fáciles de aprender para cualquier persona","Permiten demostrar matemáticamente que el software es correcto respecto a su especificación","Son los más baratos del mercado","No requieren realizar pruebas software"],ans:1},
+{q:"¿Qué representa una relación de generalización en un Diagrama de Clases UML?",opts:["Una relación de todo-parte en la que las partes no pueden existir independientemente","Una relación de todo-parte en la que las partes pueden existir independientemente","Un elemento requiere de otro para desarrollar su función","Una clasificación jerárquica entre una clase general y una o más clases específicas"],ans:3},
+{q:"¿Qué se analiza en cada vuelta de la espiral?",opts:["Riesgos del proyecto","Costes finales","Solo requisitos","Documentación"],ans:0},
+{q:"¿Qué es una «Notación» en el contexto de la ingeniería de software?",opts:["El manual de instrucciones impreso que acompaña el software","Una lista de errores encontrados por el equipo de calidad","Un sistema de comentarios que el programador escribe en su cuaderno","El conjunto de símbolos y reglas sintácticas utilizadas para representar modelos y diseños (UML)"],ans:3},
+{q:"¿Qué tipo de software se centra en el aprendizaje y la enseñanza?",opts:["Software de red","Software educativo","Software de programación","Software de sistema"],ans:1},
+{q:"¿Qué representan las interfaces en un Diagrama de Clases UML?",opts:["El número de instancias de una clase que se relacionan con otra","Un elemento que requiere de otro para desarrollar su función","Operaciones que representan los servicios de una clase a disposición de los clientes, con visibilidad pública","Una relación de todo-parte en la que las partes pueden existir independientemente"],ans:2},
+{q:"¿Qué es la programación en parejas?",opts:["Programación por turnos","Dos programadores trabajando en el mismo código","Dos equipos trabajando juntos","Dos clientes simultáneos"],ans:1},
+{q:"¿Cuál es la función principal de los requerimientos en el desarrollo de software?",opts:["Establecer qué debe hacer el sistema y las condiciones bajo las cuales debe hacerlo","Definir la arquitectura interna del sistema","Indicar las tareas del equipo de desarrollo","Describir el código fuente"],ans:0},
+{q:"¿Qué atributo del software mide la facilidad de reutilizar componentes?",opts:["Eficiencia","Reusabilidad","Confiabilidad","Robustez"],ans:1},
+{q:"¿Cuál es el objetivo de las «Pruebas de Integración»? (v2)",opts:["Una prueba que se hace a todo el sistema a la vez","Verificar que los diferentes módulos del software funcionan bien cuando trabajan juntos","Integrar a nuevos programadores en el equipo","La verificación de un módulo individual de forma aislada"],ans:1},
+{q:"La escala de tipo ratio se diferencia de la de tipo intervalo en que",opts:["La escala de tipo ratio posee un cero absoluto que indica la ausencia total del atributo","La escala de tipo ratio no permite realizar operaciones matemáticas","No hay ninguna diferencia entre ambas escalas","La de tipo intervalo es siempre más precisa"],ans:0},
+{q:"¿Qué se representa mediante un círculo con un punto relleno en su interior en un diagrama de actividades UML?",opts:["Un nodo final de actividad","Un nodo inicial","Una acción","Un nodo final de flujo"],ans:1},
+{q:"¿Qué diferencia fundamental existe entre un producto software y un proceso software?",opts:["El producto software es el resultado entregable, mientras que el proceso software es el conjunto de actividades para crearlo","El producto software es intangible, mientras que el proceso software es tangible","No existe diferencia; ambos términos son sinónimos","El producto software solo incluye código, mientras que el proceso incluye documentación"],ans:0},
+{q:"¿Qué enfoque predominaba en los primeros años de la ingeniería del Software?",opts:["Integración continua","Flexibilidad ante cambios","Procesos secuenciales y fuerte documentación","Entregas frecuentes"],ans:2},
+{q:"¿Cuál es el objetivo principal de crear un Prototipo?",opts:["Ahorrar dinero eliminando la fase de diseño","Sustituir la base de datos por archivos de texto","Vender el software antes de programarlo","Ayudar a aclarar y validar los requisitos del usuario"],ans:3},
+{q:"¿Quién es el responsable principal de la planificación del proyecto?",opts:["Jefe de proyecto","Usuario final","Programador","Diseñador gráfico"],ans:0},
+{q:"¿Qué caracteriza fundamentalmente al desarrollo incremental frente al en cascada?",opts:["Entrega al sistema completo solo al final","Divide el producto en incrementos funcionales que se diseñan, construyen y entregan secuencialmente","Elimina por completo la fase de diseño","No permite pruebas hasta el último incremento"],ans:1},
+{q:"¿Qué es el Sprint Backlog?",opts:["Las tareas seleccionadas para el sprint","La documentación final","Todos los requisitos del producto","El plan estratégico"],ans:0},
+{q:"Los proyectos de desarrollo de software",opts:["Son fáciles de gestionar","Son siempre rentables","Siempre tienen éxito","Muchos fracasan"],ans:3},
+{q:"¿Qué es Scrum?",opts:["Un modelo de proceso pesado","Un lenguaje de programación","Una herramienta CASE","Un marco de trabajo ágil para el desarrollo de productos"],ans:3},
+{q:"¿Qué tipo de norma es ISO 12207?",opts:["De herramientas","De lenguaje","De producto","De proceso"],ans:3},
+{q:"¿Qué familia metodológica enfatiza modelos matemáticos y pruebas formales?",opts:["Formal","Incremental","Tradicional","Evolutiva"],ans:0},
+{q:"¿Cuál no es una característica de RUP? (v2)",opts:["Pautas rígidas y sin flexibilidad","Pautas muy concretas para el desarrollo","Es evolutivo y flexible para asimilar cambios","Enfoque de alta colaboración"],ans:0},
+{q:"¿En qué se diferencia principalmente la Ingeniería de Sistemas de la Ingeniería del Software?",opts:["La Ingeniería de Sistemas tiene un enfoque multidisciplinar que incluye hardware, software, procesos y personas","La Ingeniería de Sistemas se ocupa solo del software de bases de datos","La Ingeniería de Sistemas solo existe en entornos gubernamentales y militares","No hay diferencia; ambos términos se refieren a la programación de aplicaciones"],ans:0},
+{q:"Un software que puede recuperarse de entradas incorrectas o fallos sin perder datos críticos demuestra principalmente",opts:["Eficiencia","Portabilidad","Robustez","Confiabilidad"],ans:2},
+{q:"¿Cuál es uno de los problemas más graves en la «Especificación de Requisitos»?",opts:["Que el código fuente no esté comentado en inglés","La falta de comunicación o la ambigüedad en lo que el cliente realmente necesita","La actualización del sistema operativo de pruebas","Que los ordenadores de los programadores no sean suficientemente potentes"],ans:1},
+{q:"¿Qué relación existe entre métricas y calidad?",opts:["La calidad elimina la necesidad de métricas","No existe relación","Las métricas sustituyen los estándares de calidad","Las métricas permiten medir atributos de calidad"],ans:3},
+{q:"¿En qué fase de RUP se realiza principalmente la implantación en producción?",opts:["Construcción","Transición","Elaboración","Inicio"],ans:1},
+{q:"¿Qué familia metodológica prioriza procesos bien definidos y controlados?",opts:["Ágil","Tradicional","Formal","Experimental"],ans:1},
+{q:"¿Qué tipo de diagrama es el diagrama de secuencia de UML?",opts:["Estructural","Estático","De comportamiento","Lógico"],ans:2},
+{q:"¿Cuál de los siguientes es un ejemplo de recurso en un proyecto de software?",opts:["Prueba de integración","Modelo en cascada","Programador del equipo","Lenguaje de modelado"],ans:2},
+{q:"¿Qué no se encargan de modelar los diagramas de comportamiento en UML?",opts:["Los flujos de trabajo de los procesos","Los requisitos del sistema","Los mensajes entre objetos","La estructura estática del sistema"],ans:3},
+{q:"¿Qué se agrupa dentro de «Actividades y Tareas» en MÉTRICA 3.0?",opts:["Las acciones a realizar para alcanzar los objetivos del proyecto","Las personas y roles que intervienen en el desarrollo","Los documentos generados y las entregas del proyecto","Las conexiones entre los diferentes procesos"],ans:0},
+{q:"En diagrama de secuencia UML, ¿qué operador de fragmento representa un comportamiento opcional?",opts:["alt","opt","par","loop"],ans:1},
+{q:"¿Qué significa la Propiedad Colectiva del Código en XP?",opts:["Que cualquier desarrollador puede modificar y mejorar cualquier parte del código en cualquier momento","Que no se puede saber quién escribió cada línea","Que el código fuente es de dominio público en Internet","Que el código se guarda en una carpeta compartida sin contraseña"],ans:0},
+{q:"¿Por qué son útiles los estándares en el desarrollo de software?",opts:["Porque aumentan los costos","Porque limitan la creatividad","Porque son opcionales","Porque agrupan lo más apropiado de las buenas prácticas"],ans:3},
+{q:"¿Cuál de estos elementos NO forma parte del concepto de software?",opts:["Scripts de automatización","Transistores","Archivos","Algoritmos"],ans:1},
+{q:"¿Cómo se desarrollaba el software en sus inicios (hasta la década de 1950)?",opts:["Mediante entornos gráficos avanzados","De forma manual, muy ligada al hardware","Usando metodologías ágiles","Con lenguajes de alto nivel orientados a objetos"],ans:1},
+{q:"¿Qué caracteriza al desarrollo evolutivo como enfoque de construcción de software?",opts:["Requiere que todos los requisitos estén al 100% definidos antes de iniciar","El sistema comienza como un prototipo simple que se expande y refina gradualmente mediante ciclos de feedback hasta convertirse en el producto final","El sistema se diseña completamente antes de escribir una sola línea de código","Cada versión del sistema se descarta completamente tras su evaluación"],ans:1},
+{q:"¿Qué caracteriza al modelo en cascada?",opts:["Fases secuenciales bien definidas","Ausencia de documentación","Iteraciones constantes","Cambios constantes de requisitos"],ans:0},
+];
+
+const BATCH = 10;
+let mode = '', questions = [], current = 0, answers = {}, revealed = {}, filterReview = 'all';
+
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+function startMode(m){
+  mode=m; answers={}; revealed={}; current=0;
+  questions = m==='exam' ? shuffle(ALL_QUESTIONS).slice(0,BATCH) : shuffle(ALL_QUESTIONS);
+  render();
+}
+
+function selectAnswer(qi,oi){
+  if(answers[qi]!==undefined)return;
+  answers[qi]=oi;
+  if(mode==='practice') revealed[qi]=true;
+  render();
+}
+function revealQ(){revealed[current]=true;render();}
+function nav(d){current=Math.max(0,Math.min(questions.length-1,current+d));render();}
+function setFilter(f){filterReview=f;render();}
+
+function calcScore(){
+  let ok=0,ko=0,skip=0;
+  questions.forEach((q,i)=>{
+    if(answers[i]===undefined)skip++;
+    else if(answers[i]===q.ans)ok++;
+    else ko++;
+  });
+  return{ok,ko,skip,total:questions.length};
+}
+
+function updateHeader(){
+  const h=document.getElementById('headerStats');
+  if(!questions.length){h.innerHTML='';return;}
+  const{ok,ko}=calcScore();
+  const ans=Object.keys(answers).length;
+  h.innerHTML=`<span class="stat-badge">${ans}/${questions.length}</span>${ok?`<span class="stat-badge ok">✓ ${ok}</span>`:''}${ko?`<span class="stat-badge ko">✗ ${ko}</span>`:''}`;
+}
+
+function renderStart(){
+  return`<div class="start-screen">
+    <div class="start-title">Tipo Test<br><em>FIS 25·26</em></div>
+    <p class="start-sub">${ALL_QUESTIONS.length} preguntas · Elige un modo para empezar</p>
+    <div class="mode-grid">
+      <div class="mode-card" onclick="startMode('exam')">
+        <div class="mode-icon">🎯</div>
+        <div class="mode-name">Examen simulado</div>
+        <div class="mode-desc">${BATCH} preguntas aleatorias. Sin pistas. Resultado al final.</div>
+      </div>
+      <div class="mode-card" onclick="startMode('practice')">
+        <div class="mode-icon">📚</div>
+        <div class="mode-name">Práctica libre</div>
+        <div class="mode-desc">Todas las preguntas con feedback inmediato tras cada respuesta.</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderQ(qi){
+  const q=questions[qi];
+  const ua=answers[qi];
+  const shown=revealed[qi];
+  const L=['A','B','C','D'];
+  const opts=q.opts.map((o,i)=>{
+    let cls='option';
+    if(ua===i) cls+=shown?(i===q.ans?' correct':' wrong'):' selected';
+    else if(shown&&i===q.ans) cls+=' correct';
+    if(ua!==undefined||shown) cls+=' disabled';
+    return`<div class="${cls}" onclick="selectAnswer(${qi},${i})"><span class="opt-key">${L[i]}</span><span class="opt-text">${o}</span></div>`;
+  }).join('');
+  let fb='';
+  if(shown){
+    if(ua!==undefined){
+      fb=ua===q.ans
+        ?`<div class="feedback ok show">✓ Correcto</div>`
+        :`<div class="feedback ko show">✗ Incorrecto — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
+    } else {
+      fb=`<div class="feedback ko show">Sin respuesta — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
+    }
+  }
+  const showRevealBtn=mode==='practice'&&!shown&&ua!==undefined;
+  return`<div class="q-card">
+    <div class="q-number">Pregunta ${qi+1} de ${questions.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">${opts}</div>
+    ${fb}
+    ${showRevealBtn?`<div style="margin-top:12px"><button class="btn" onclick="revealQ()">Ver respuesta</button></div>`:''}
+  </div>`;
+}
+
+function renderResults(){
+  const{ok,ko,skip,total}=calcScore();
+  const pct=Math.round((ok/total)*100);
+  const scoreClass=pct>=70?'pass':pct>=50?'mid':'fail';
+  const rev=questions.map((q,i)=>({idx:i,q:q.q,correct:answers[i]===q.ans,chosen:answers[i]!==undefined?q.opts[answers[i]]:null,correctAns:q.opts[q.ans]}));
+  const filtered=rev.filter(r=>filterReview==='all'?true:filterReview==='ok'?r.correct:!r.correct);
+  const revHtml=filtered.map(r=>`
+    <div class="review-item ${r.correct?'ok':'ko'}">
+      <div class="review-q">${r.idx+1}. ${r.q}</div>
+      <div class="review-ans">
+        ${r.chosen?`Tu respuesta: <span class="${r.correct?'right':'wrong-txt'}">${r.chosen}</span> · `:'Sin respuesta · '}
+        Correcta: <span class="right">${r.correctAns}</span>
+      </div>
+    </div>`).join('');
+  return`<div class="results-header">
+    <div class="big-score ${scoreClass}">${pct}%</div>
+    <div class="score-label">Resultado del examen simulado</div>
+    <div class="score-grid">
+      <span class="score-pill ok">✓ ${ok} correctas</span>
+      <span class="score-pill ko">✗ ${ko} incorrectas</span>
+      ${skip?`<span class="score-pill sk">⊘ ${skip} sin responder</span>`:''}
+    </div>
+    <div class="result-btns">
+      <button class="btn primary" onclick="startMode('exam')">Nuevo examen</button>
+      <button class="btn" onclick="startMode('practice')">Práctica libre</button>
+      <button class="btn ghost" onclick="questions=[];render()">Inicio</button>
+    </div>
+  </div>
+  <div class="review-title">Revisión de respuestas</div>
+  <div class="filter-row">
+    <button class="filter-btn ${filterReview==='all'?'active':''}" onclick="setFilter('all')">Todas (${total})</button>
+    <button class="filter-btn ${filterReview==='ok'?'active':''}" onclick="setFilter('ok')">Correctas (${ok})</button>
+    <button class="filter-btn ${filterReview==='ko'?'active':''}" onclick="setFilter('ko')">Incorrectas (${ko+skip})</button>
+  </div>
+  ${revHtml}`;
+}
+
+function render(){
+  const app=document.getElementById('app');
+  updateHeader();
+  if(!questions.length){app.innerHTML=renderStart();return;}
+  if(mode==='exam'&&Object.keys(answers).length===questions.length){
+    app.innerHTML=renderResults();return;
+  }
+  const{ok,ko}=calcScore();
+  const answered=Object.keys(answers).length;
+  const pct=Math.round((answered/questions.length)*100);
+  const isLast=current===questions.length-1;
+  const allDone=answered===questions.length;
+  let rightBtn='';
+  if(!isLast) rightBtn=`<button class="btn primary" onclick="nav(1)">Siguiente →</button>`;
+  else if(mode==='exam'&&allDone) rightBtn=`<button class="btn primary" onclick="finalizeExam()">Ver resultados</button>`;
+  else if(mode==='exam') rightBtn=`<button class="btn primary" onclick="finalizeExam()">Finalizar</button>`;
+  else rightBtn=`<button class="btn primary" onclick="finalizeExam()">Ver resumen</button>`;
+
+  app.innerHTML=`
+    <div class="back-row"><button class="btn ghost" onclick="questions=[];render()">← Inicio</button></div>
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-label">${mode==='exam'?'Examen simulado':'Práctica libre'}</span>
+        <span class="progress-label">${answered}/${questions.length} respondidas</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    ${renderQ(current)}
+    <div class="nav-bar">
+      <button class="btn" onclick="nav(-1)" ${current===0?'disabled':''}>← Anterior</button>
+      <span style="font-family:var(--mono);font-size:13px;color:var(--muted)">${current+1} / ${questions.length}</span>
+      ${rightBtn}
+    </div>`;
+}
+
+function finalizeExam(){
+  questions.forEach((_,i)=>{if(answers[i]===undefined)revealed[i]=true;});
+  filterReview='all';
+  const app=document.getElementById('app');
+  app.innerHTML=renderResults();
+  updateHeader();
+}
+
+render();
+</script>
+</body>
+</html>
