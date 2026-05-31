@@ -75,7 +75,6 @@
     transition: background 0.3s, color 0.3s;
   }
 
-  /* ─── HEADER ─────────────────────────────────────── */
   header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -97,45 +96,25 @@
   [data-theme="light"] .stat-badge.ok { border-color: #86efac; }
   [data-theme="light"] .stat-badge.ko { border-color: #fca5a5; }
 
-  /* ─── THEME TOGGLE ────────────────────────────────── */
   .theme-toggle {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    cursor: pointer;
-    user-select: none;
-    padding: 5px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    transition: all 0.2s;
-    font-size: 12px;
-    color: var(--muted);
-    font-family: var(--mono);
-    white-space: nowrap;
+    display: flex; align-items: center; gap: 7px; cursor: pointer; user-select: none;
+    padding: 5px 10px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--surface2); transition: all 0.2s; font-size: 12px;
+    color: var(--muted); font-family: var(--mono); white-space: nowrap;
   }
   .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
   .toggle-track {
-    width: 34px; height: 18px;
-    border-radius: 9px;
-    background: var(--border);
-    position: relative;
-    transition: background 0.25s;
-    flex-shrink: 0;
+    width: 34px; height: 18px; border-radius: 9px; background: var(--border);
+    position: relative; transition: background 0.25s; flex-shrink: 0;
   }
   [data-theme="light"] .toggle-track { background: var(--accent); }
   .toggle-thumb {
-    position: absolute;
-    top: 2px; left: 2px;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: var(--muted);
-    transition: transform 0.25s, background 0.25s;
+    position: absolute; top: 2px; left: 2px; width: 14px; height: 14px;
+    border-radius: 50%; background: var(--muted); transition: transform 0.25s, background 0.25s;
   }
   [data-theme="light"] .toggle-thumb { transform: translateX(16px); background: #fff; }
   .toggle-icon { font-size: 14px; }
 
-  /* ─── MAIN ────────────────────────────────────────── */
   main { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
 
   body.on-start {
@@ -143,24 +122,15 @@
     background-attachment: fixed !important;
   }
 
-  /* ─── START CARD ──────────────────────────────────── */
   .start-screen {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 57px);
-    padding: 32px 16px;
+    display: flex; align-items: center; justify-content: center;
+    min-height: calc(100vh - 57px); padding: 32px 16px;
   }
   .quiz-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 40px 36px 36px;
-    width: 100%;
-    max-width: 440px;
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;
+    padding: 40px 36px 36px; width: 100%; max-width: 440px;
     box-shadow: 0 8px 40px var(--shadow), 0 0 0 1px rgba(255,255,255,0.04) inset;
-    backdrop-filter: blur(12px);
-    transition: background 0.3s, border-color 0.3s;
+    backdrop-filter: blur(12px); transition: background 0.3s, border-color 0.3s;
   }
   .qm-title { font-family: var(--sans); font-size: 30px; font-weight: 700; color: var(--text); text-align: center; margin-bottom: 28px; letter-spacing: -0.02em; }
   .qm-field { margin-bottom: 18px; }
@@ -179,25 +149,18 @@
   [data-theme="light"] .qm-btn-practice:hover { background: var(--border); }
   .qm-divider { text-align: center; font-size: 12px; color: var(--muted); margin: 6px 0; font-family: var(--mono); }
   .qm-info {
-    background: rgba(124,106,247,0.08);
-    border: 1px solid rgba(124,106,247,0.2);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 22px;
-    font-size: 13px;
-    color: var(--card-label);
-    line-height: 1.65;
+    background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.2);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 22px;
+    font-size: 13px; color: var(--card-label); line-height: 1.65;
   }
   [data-theme="light"] .qm-info { background: rgba(91,61,232,0.06); border-color: rgba(91,61,232,0.2); }
 
-  /* ─── PROGRESS ────────────────────────────────────── */
   .progress-wrap { margin-bottom: 24px; }
   .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; }
   .progress-label { font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .progress-track { height: 3px; background: var(--border); border-radius: 2px; }
   .progress-fill { height: 3px; background: var(--accent); border-radius: 2px; transition: width 0.3s ease; }
 
-  /* ─── QUESTION CARD ───────────────────────────────── */
   .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; transition: border-color 0.2s, box-shadow 0.2s, background 0.3s; }
   .q-card.flash-ok { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
   .q-card.flash-ko { border-color: var(--red); box-shadow: 0 0 0 1px var(--red); }
@@ -218,34 +181,34 @@
   .option.wrong .opt-key { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.12); }
   .opt-text { font-size: 14px; line-height: 1.5; }
 
-  /* ─── SKIP BUTTON ─────────────────────────────────── */
   .skip-row { display: flex; justify-content: center; margin-top: 14px; }
   .btn-skip {
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 20px;
-    border-radius: 8px;
-    border: 1px dashed var(--skip-border);
-    background: transparent;
-    color: var(--skip);
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.01em;
+    font-family: var(--sans); font-size: 13px; font-weight: 500; padding: 8px 20px;
+    border-radius: 8px; border: 1px dashed var(--skip-border); background: transparent;
+    color: var(--skip); cursor: pointer; transition: all 0.15s; letter-spacing: 0.01em;
   }
   .btn-skip:hover { background: var(--skip-bg); border-style: solid; }
 
-  /* ─── FEEDBACK ────────────────────────────────────── */
-  .feedback { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.5; display: none; }
+  /* ─── FEEDBACK ─────────────────────────────── */
+  .feedback { margin-top: 14px; padding: 14px 16px; border-radius: 8px; font-size: 13px; line-height: 1.6; display: none; }
   .feedback.show { display: block; }
   .feedback.ok { background: var(--green-bg); border: 1px solid #1e4d38; color: var(--green); }
   .feedback.ko { background: var(--red-bg); border: 1px solid #4d1e1e; color: var(--red); }
   .feedback.skipped { background: var(--skip-bg); border: 1px solid var(--skip-border); color: var(--skip); }
   .feedback strong { color: var(--text); }
+  .feedback .fb-explain {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--text);
+    font-size: 12.5px;
+    line-height: 1.65;
+    opacity: 0.85;
+  }
+  [data-theme="light"] .feedback .fb-explain { border-top-color: rgba(0,0,0,0.08); }
   [data-theme="light"] .feedback.ok { border-color: #86efac; }
   [data-theme="light"] .feedback.ko { border-color: #fca5a5; }
 
-  /* ─── NAV ─────────────────────────────────────────── */
   .nav-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; }
   .btn { font-family: var(--sans); font-size: 14px; padding: 9px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; transition: all 0.12s; font-weight: 500; }
   .btn:hover { border-color: var(--accent); color: var(--accent-light); }
@@ -255,7 +218,6 @@
   .btn.ghost { background: transparent; border-color: transparent; color: var(--muted); font-size: 13px; }
   .btn.ghost:hover { color: var(--text); border-color: transparent; }
 
-  /* ─── RESULTS ─────────────────────────────────────── */
   .results-header { text-align: center; padding: 48px 24px 36px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px; transition: background 0.3s; }
   .big-score { font-family: var(--mono); font-size: 72px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
   .big-score.pass { color: var(--green); }
@@ -272,7 +234,6 @@
   [data-theme="light"] .score-pill.ko { border-color: #fca5a5; }
   .result-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-  /* ─── REVIEW ──────────────────────────────────────── */
   .review-title { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; margin-top: 32px; }
   .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
   .filter-btn { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.12s; }
@@ -283,7 +244,8 @@
   .review-item.ko { border-left-color: var(--red); }
   .review-item.sk { border-left-color: var(--skip); }
   .review-q { font-size: 14px; font-weight: 500; margin-bottom: 6px; line-height: 1.5; }
-  .review-ans { font-size: 13px; color: var(--muted); }
+  .review-ans { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .review-explain { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); opacity: 0.8; }
   .review-ans .right { color: var(--green); font-weight: 500; }
   .review-ans .wrong-txt { color: var(--red); }
   .review-ans .skip-txt { color: var(--skip); }
@@ -318,7 +280,6 @@
 let currentTheme = localStorage.getItem('fis-theme') || 'dark';
 document.documentElement.setAttribute('data-theme', currentTheme);
 document.getElementById('themeIcon').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
-
 function toggleTheme() {
   currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
@@ -330,7 +291,6 @@ function toggleTheme() {
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let _ctx = null;
 function getCtx() { if (!_ctx) _ctx = new AudioCtx(); return _ctx; }
-
 function playCorrect() {
   try {
     const ctx = getCtx();
@@ -373,7 +333,211 @@ function playSkip() {
   } catch(e){}
 }
 
-// ─── DATA ─────────────────────────────────────────────────────────────────────
+// ─── TIEMPOS DE AVANCE AUTOMÁTICO ─────────────────────────────────────────────
+const DELAY_CORRECT = 2800;  // ms — tiempo para leer feedback correcto
+const DELAY_WRONG   = 3500;  // ms — tiempo para leer feedback incorrecto + explicación
+const DELAY_SKIP    = 2800;  // ms — tiempo para leer explicación al saltar
+
+// ─── EXPLICACIONES ────────────────────────────────────────────────────────────
+// Cada explicación corresponde por índice al array ALL_QUESTIONS
+const EXPLANATIONS = [
+"«Reutilización» significa aprovechar productos de trabajo ya creados (código, documentos, componentes) en lugar de construirlos desde cero, aumentando la eficiencia.",
+"En MÉTRICA 3.0, una Actividad es un conjunto de Tareas. Las tareas son las unidades más pequeñas que componen una actividad.",
+"Una tarea es la unidad elemental y administrable de trabajo dentro del proceso software. Varias tareas forman una actividad.",
+"El software de sistema (p. ej. SO, drivers) gestiona el hardware y sirve de base para que el resto de programas funcionen.",
+"UML (Unified Modeling Language) es un lenguaje gráfico estándar para visualizar, especificar y documentar sistemas software.",
+"XP (Extreme Programming) usa iteraciones muy cortas (1–3 semanas) para entregar valor frecuentemente y adaptarse al cambio.",
+"Upper CASE apoya fases tempranas (análisis, diseño); Lower CASE apoya fases tardías (codificación, pruebas, mantenimiento).",
+"Un rectángulo estrecho sobre la línea de vida representa el período de activación: el objeto está ejecutando una operación.",
+"Los modelos evolutivos son la base conceptual de los ágiles: ambos iterat, entregan incrementalmente y aceptan el cambio.",
+"Un requisito verificable tiene al menos una prueba objetiva (test, inspección, análisis) que permite comprobar su cumplimiento.",
+"Un proceso de desarrollo de software es el marco que define actividades, acciones, tareas, productos de trabajo y artefactos para construir software de calidad.",
+"Al final de la fase de Inicio de RUP se obtiene una visión del sistema, un caso de negocio básico y el alcance delimitado del proyecto.",
+"Los Diagramas de Actividad modelan el flujo de trabajo o de control entre actividades, mostrando el comportamiento dinámico del sistema.",
+"El Product Owner (PO) es el responsable de maximizar el valor del producto gestionando y priorizando el Product Backlog.",
+"En UML: '+' = público, '-' = privado, '#' = protegido, '~' = paquete. Por tanto '#' indica visibilidad protegida.",
+"La crisis del software de los años 60 evidenció proyectos fuera de plazo y presupuesto, lo que impulsó la Ingeniería del Software.",
+"RAD es adecuado cuando los requisitos están bien acotados, el equipo es pequeño y se necesita una entrega rápida (60–90 días).",
+"Dividir en fases facilita planificar, controlar el progreso, asegurar la calidad y detectar errores en momentos tempranos.",
+"El mantenimiento de hardware pertenece a la Ingeniería de Sistemas, no al cuerpo de conocimiento de la Ingeniería del Software.",
+"La refactorización (mejorar la estructura interna sin cambiar el comportamiento externo) es la práctica XP para mantener el código limpio.",
+"El CMM del SEI define 5 niveles de madurez del proceso software: Inicial, Repetible, Definido, Gestionado y Optimizado.",
+"Reducir la complejidad algorítmica es un objetivo de diseño/codificación, no un objetivo de la medición en IS.",
+"Líneas de código / persona-mes es la métrica clásica de productividad en el desarrollo de software.",
+"El Manifiesto Ágil valora «individuos e interacciones sobre procesos y herramientas», no al revés.",
+"Los modelos evolutivos permiten responder rápidamente a los cambios de requisitos gracias a su naturaleza iterativa e incremental.",
+"El software es lógico e intangible: no se puede tocar, no se desgasta físicamente, aunque sí puede «degradarse» conceptualmente.",
+"En la fase de Elaboración de RUP se establece la arquitectura base, se mitigan los riesgos técnicos y se refina el plan.",
+"En RAD los usuarios finales participan activamente en los talleres de diseño conjunto (JAD) para definir y validar los requisitos.",
+"El perfil «Consultor» en MÉTRICA 3.0 engloba roles como Consultor Informático y Técnico de Sistemas que asesoran al proyecto.",
+"La validación (verificar que el software cumple las expectativas del cliente) ocurre principalmente durante las pruebas de aceptación.",
+"La Confiabilidad es la capacidad del software para realizar sus funciones bajo condiciones específicas durante un periodo de tiempo.",
+"La Confiabilidad se define como la probabilidad de que el software realice sus funciones críticas sin fallos durante un tiempo determinado.",
+"El Product Owner (PO) es el único responsable de ordenar y priorizar el Product Backlog según el valor de negocio.",
+"Rombo vacío = Agregación (partes pueden existir independientemente). Rombo relleno = Composición (partes no pueden existir solas).",
+"Un proceso ágil se basa en desarrollo iterativo e incremental, con entregas frecuentes y respuesta rápida al cambio.",
+"Los Casos de Uso permiten centrar el esfuerzo en las necesidades reales del usuario, mejorando la comunicación cliente-desarrollador.",
+"'Programa' es un conjunto de instrucciones; 'software' es más amplio: incluye programas, datos, documentación y procedimientos.",
+"La calidad interna se mide en los atributos del código (estructura, modularidad, comentarios) sin ejecutar el software.",
+"La calidad externa se observa al ejecutar el software: rendimiento real, fiabilidad, facilidad de uso percibida por el usuario.",
+"Un compilador es una herramienta de programación que traduce código fuente a código ejecutable.",
+"Las metodologías ágiles son las más adecuadas cuando los requisitos cambian frecuentemente durante el desarrollo.",
+"El desarrollo evolutivo NO requiere tener todos los requisitos definidos al inicio; de hecho, parte de requisitos incompletos.",
+"Las acciones en un diagrama de actividad representan pasos o unidades de trabajo dentro de una actividad mayor.",
+"El Mantenimiento cierra el ciclo de vida: el software se corrige, adapta y mejora durante toda su vida útil.",
+"Los diagramas estructurales (Clases, Objetos, Componentes…) modelan la estructura estática del sistema y las relaciones entre elementos.",
+"Un actor en UML representa cualquier entidad externa (persona, sistema, dispositivo) que interactúa con el sistema modelado.",
+"El código heredado (legacy) es código antiguo, a menudo sin documentación y con alta deuda técnica, difícil y arriesgado de mantener.",
+"Los objetivos definen el «qué se quiere», los requerimientos el «qué debe hacer el sistema» y las actividades el «cómo se construye».",
+"Las herramientas CASE mecanizan métodos y técnicas, dando soporte automatizado a las distintas fases del proceso de desarrollo.",
+"Un análisis de viabilidad estudia si el proyecto es técnicamente posible, económicamente rentable, operativamente viable y legalmente permitido.",
+"Las Ciencias de la Computación se centran en la teoría y los fundamentos; la IS aplica esos principios para construir software real.",
+"El objetivo fundamental de la IS es producir software de alta calidad, que resuelva el problema del usuario, a tiempo y en presupuesto.",
+"«include» en Casos de Uso se representa con línea discontinua, flecha abierta apuntando al caso incluido y etiqueta <<include>>.",
+"UML (Unified Modeling Language) es el estándar de facto para el modelado visual de sistemas software.",
+"Una barra gruesa (fork) representa bifurcación concurrente: un flujo de entrada se divide en varios flujos paralelos.",
+"El Nivel 1 del CMM (Inicial) es caótico: no hay procesos definidos y el éxito depende del esfuerzo individual.",
+"Las Ciencias de la Computación estudian teoría y fundamentos; la Ingeniería del Software aplica esos conocimientos en contextos reales de producción.",
+"Los diagramas estructurales (Clases, Componentes, Despliegue…) describen la estructura estática del sistema.",
+"El modelo en cascada es sencillo, está bien documentado y es fácil de entender y gestionar cuando los requisitos son estables.",
+"Un nodo de combinación (join/merge) hace converger varios caminos alternativos o paralelos en un único flujo de salida.",
+"El cliente define los objetivos de negocio, establece las prioridades y financia el proyecto, aunque no sea el usuario final.",
+"El MSI (Mantenimiento de Sistemas de Información) gestiona las modificaciones sobre sistemas en producción: correcciones, mejoras y adaptaciones.",
+"El análisis produce los modelos del sistema actual y del sistema propuesto, base para el diseño posterior.",
+"La mala comunicación genera malentendidos en los requisitos, lo que provoca retrabajos costosos y productos que no satisfacen al usuario.",
+"La Corrección es el grado en que el software satisface sus especificaciones y cumple los objetivos del usuario.",
+"Los ingenieros de software son los responsables de diseñar la arquitectura, codificar y construir el sistema.",
+"El mantenimiento ocupa entre el 60-80% del esfuerzo total porque el software debe evolucionar durante toda su vida operativa.",
+"Un requerimiento funcional describe un área de funcionalidad concreta que el sistema debe soportar (p. ej. «registrar usuarios»).",
+"Un prototipo es un modelo parcial y ejecutable del sistema, usado para validar requisitos y reducir la incertidumbre.",
+"El Product Backlog es el artefacto que hace visible todo el trabajo pendiente y los requisitos priorizados del producto.",
+"Los modelos ágiles permiten incorporar cambios de requisitos en cualquier momento, adaptándose rápidamente al entorno.",
+"Una línea discontinua con flecha abierta en un diagrama de clases UML representa una relación de dependencia.",
+"Las pruebas de integración verifican que los módulos funcionan correctamente cuando se combinan, detectando problemas en las interfaces.",
+"El software de sistema actúa de intermediario entre el hardware y las aplicaciones de usuario (SO, drivers, middleware).",
+"CMM y SPICE evalúan la madurez y capacidad de la organización o del proceso de desarrollo, no del producto en sí.",
+"MÉTRICA v3 es coherente con ISO 12207 y otros modelos de calidad; incluye actividades de calidad integradas en el proceso.",
+"Barry Boehm propuso el Modelo en Espiral (1986) para gestionar riesgos mediante ciclos iterativos de planificación-análisis-construcción-evaluación.",
+"Flecha sólida con punta cerrada = Generalización (herencia): la clase hija hereda atributos y operaciones de la clase padre.",
+"En Scrum, los cambios de requisitos se añaden al Product Backlog y el PO los prioriza para futuros sprints.",
+"Las metodologías ágiles surgieron como respuesta a la rigidez de los modelos tradicionales ante requisitos que cambian con frecuencia.",
+"Los Diagramas de Objetos muestran una instantánea del sistema en un momento dado: instancias concretas y sus enlaces.",
+"El EVS (Estudio de Viabilidad del Sistema) no es una fase del DSI; el DSI incluye análisis, diseño técnico y pruebas del sistema.",
+"En los modelos ágiles el usuario/cliente colabora continuamente, aportando feedback tras cada iteración para orientar el desarrollo.",
+"XP busca mejorar la calidad del software y la capacidad de adaptarse al cambio mediante prácticas como TDD, refactorización y programación en parejas.",
+"El Sprint Backlog contiene las tareas seleccionadas del Product Backlog para el sprint actual, más el plan para ejecutarlas.",
+"Sí, en UML los actores pueden relacionarse entre sí mediante generalización (herencia de rol).",
+"El software se desarrolla o construye lógicamente mediante ingeniería; no se fabrica en serie como el hardware.",
+"El modelo Incremental es útil cuando el personal o los recursos no están disponibles desde el inicio pero se quiere entregar algo funcional pronto.",
+"Los métodos ágiles priorizan la adaptación continua al cambio sobre la planificación rígida y la documentación exhaustiva.",
+"Un requisito funcional describe una función concreta del sistema; «permitir el registro de usuarios» es un ejemplo claro.",
+"Scrum puede ser difícil en entornos con alta regulación, contratos fijos o requisitos muy estables que no admiten cambios.",
+"El Nivel 1 del CMM (Inicial) es el más bajo: los procesos son caóticos e impredecibles.",
+"Una metodología integra métodos, técnicas y herramientas en un marco coherente; un método es solo una parte de ese conjunto.",
+"Una barra gruesa con múltiples entradas sincroniza (join) flujos concurrentes: espera a que todos terminen antes de continuar.",
+"La construcción incluye la codificación del software, la integración de componentes y las pruebas unitarias y de integración.",
+"Las pruebas tienen como objetivo detectar y corregir errores antes de la entrega del software al cliente.",
+"La Certificación de Software es un proceso de verificación externa (por un organismo independiente) de que el software cumple estándares.",
+"Los lenguajes de alto nivel (FORTRAN, COBOL, C…) aumentaron dramáticamente la productividad al abstraer del hardware.",
+"Un modelo de proceso de software describe las fases, actividades, artefactos y relaciones temporales del ciclo de desarrollo.",
+"Un proceso confiable previene errores humanos o los detecta tempranamente, antes de que afecten al producto final.",
+"La «longitud» mide el tamaño del producto software, normalmente expresado en líneas de código (LOC) o puntos de función.",
+"En MÉTRICA v3 el Plan de Pruebas se comienza a definir en las fases de Análisis y Diseño, en paralelo con la especificación del sistema.",
+"La IS nació para resolver la falta de control, calidad y planificación que caracterizó la crisis del software de los años 60.",
+"Un procesador de textos es software de aplicación: ayuda al usuario a realizar tareas concretas (editar documentos).",
+"Un modelo es cualquier abstracción simplificada de la realidad que facilita su comprensión, análisis o comunicación.",
+"«Software de hardware» no es una categoría reconocida. Las categorías principales son: de sistema, de aplicación, de programación y embebido.",
+"Corrección = el software satisface exactamente los requisitos especificados. Es uno de los atributos de calidad fundamentales.",
+"«include» indica reutilización obligatoria: el caso de uso base siempre incluye el comportamiento del caso incluido.",
+"«extend» se representa con línea discontinua, flecha abierta apuntando al caso base y etiqueta <<extend>>.",
+"Las metodologías tradicionales (cascada, etc.) enfatizan la documentación exhaustiva de cada fase antes de continuar.",
+"«include» se representa con línea discontinua, flecha hueca apuntando al caso incluido y la etiqueta <<include>>.",
+"Los modelos se usan para analizar, comunicar y validar soluciones antes de implementarlas, reduciendo el coste de los errores.",
+"Los diagramas de actividad no modelan directamente el estado interno persistente de un objeto; para eso se usan los diagramas de estado.",
+"XP promueve el diseño emergente: la arquitectura evoluciona guiada por pruebas (TDD) y refactorización continua.",
+"«El sistema debe generar facturas» es un requisito funcional: describe una función concreta que el sistema debe realizar.",
+"Software = programas + datos + documentación + procedimientos necesarios para su instalación, operación, reparación y mejora.",
+"La mala comunicación entre desarrollo y cliente genera requisitos mal entendidos y productos que no satisfacen las expectativas.",
+"RUP es flexible y adaptable; no impone pautas rígidas sin flexibilidad.",
+"La Robustez del proceso permite adaptarse a situaciones inesperadas o cambios sin perder el control del proyecto.",
+"El software embebido está integrado en dispositivos electrónicos (microondas, coches, marcapasos) y controla su funcionamiento.",
+"Las fases genéricas organizan el trabajo del proyecto de forma estructurada, facilitando la planificación y el control.",
+"El Nivel 3 (Definido) del CMM implica procesos estandarizados a nivel organizacional con activos reutilizables y mejora continua.",
+"UML es un lenguaje de modelado gráfico estándar (OMG) para visualizar, especificar, construir y documentar sistemas software.",
+"Un IDE es la herramienta de desarrollo más completa: integra editor, compilador, depurador y otras utilidades en un solo entorno.",
+"UML se usa principalmente en las fases de análisis y diseño para modelar la estructura y el comportamiento del sistema.",
+"La Eficiencia mide el uso adecuado de recursos (CPU, memoria, red) para realizar las funciones del software.",
+"Las Clases Abstractas no aparecen en un diagrama de secuencia (que muestra interacciones entre objetos en el tiempo).",
+"Adobe Photoshop es software de aplicación: ayuda al usuario a realizar tareas concretas (edición de imagen).",
+"RAD tiene un ciclo de tiempo típico de 60–90 días para aplicaciones de tamaño mediano, gracias a la participación activa del usuario.",
+"El perfil «Analista» en MÉTRICA 3.0 incluye al Analista de Sistemas, Administrador de BD y Equipo de Arquitectura.",
+"Estimar = predecir el esfuerzo, tiempo y recursos necesarios para completar el proyecto con una incertidumbre aceptable.",
+"CASE = Computer Aided Software Engineering. Herramientas que automatizan y dan soporte a las actividades del proceso software.",
+"El lenguaje de programación es una decisión técnica, no un criterio para elegir la metodología del proyecto.",
+"En RUP la fase de Elaboración define y valida la arquitectura base, elimina los riesgos técnicos principales y refina el plan.",
+"La usabilidad se mide por la curva de aprendizaje, la facilidad de uso y la satisfacción del usuario.",
+"En los modelos ágiles el cliente/usuario tiene una participación continua: asiste a reuniones, revisa incrementos y da feedback.",
+"«include» indica que un caso de uso incorpora explícitamente el comportamiento de otro (reutilización obligatoria).",
+"El Product Owner representa los intereses del cliente y del negocio ante el equipo de desarrollo.",
+"Una actividad es un conjunto organizado y coherente de tareas que contribuyen a un objetivo concreto del proceso.",
+"El desarrollo incremental permite al cliente recibir y usar funcionalidades antes del fin del proyecto, e influir en los siguientes incrementos.",
+"El modelo en cascada es adecuado cuando los requisitos están bien definidos, son estables y el dominio es conocido.",
+"«Participantes» en MÉTRICA 3.0 son las personas y los roles que intervienen en el desarrollo y mantenimiento de los SI.",
+"El mantenimiento correctivo corrige defectos o fallos detectados en el software durante su operación.",
+"El Diagrama de Clases es un diagrama estructural: muestra clases, atributos, operaciones y relaciones estáticas.",
+"El software no sufre desgaste físico pero puede contener defectos lógicos latentes que se manifiestan con el tiempo.",
+"En Scrum un incremento debe ser usable y representar valor, pero no es obligatorio que esté desplegado en producción.",
+"Una métrica de software es una medida cuantitativa de un atributo del proceso o del producto software.",
+"La confiabilidad es la capacidad del software de funcionar correctamente durante un periodo de tiempo bajo condiciones determinadas.",
+"Si la arquitectura inicial no anticipa los incrementos futuros, las ampliaciones pueden requerir refactorizaciones o reescrituras costosas.",
+"Un actor en UML representa una persona, sistema o dispositivo externo que interactúa con el sistema que se está modelando.",
+"«include» se usa cuando varios casos de uso comparten un comportamiento común que se extrae para reutilizarlo.",
+"La fase de Mantenimiento corrige errores detectados por los usuarios una vez el software está en producción.",
+"El software de sistema gestiona los recursos del hardware (CPU, memoria, E/S) y sirve de base para las aplicaciones.",
+"Los modelos de clase e interacción de objetos se generan en la fase ASI (Análisis del Sistema de Información) de MÉTRICA.",
+"Los métodos formales permiten especificar y verificar matemáticamente la corrección del software respecto a su especificación.",
+"La Generalización en UML representa una relación de herencia/clasificación jerárquica entre una clase general y sus subclases.",
+"En cada vuelta del modelo en espiral se analizan los riesgos del proyecto, se planifica y se construye un prototipo o incremento.",
+"Una Notación es el sistema de símbolos y reglas sintácticas usado para representar modelos (p. ej. UML).",
+"El software educativo está diseñado para apoyar procesos de aprendizaje y enseñanza.",
+"Las interfaces en UML representan contratos públicos: definen operaciones con visibilidad pública que las clases pueden implementar.",
+"La programación en parejas (pair programming) consiste en dos desarrolladores trabajando juntos en el mismo código y equipo.",
+"Los requerimientos establecen qué debe hacer el sistema y las condiciones bajo las que debe operar.",
+"La Reusabilidad mide la facilidad con que componentes software pueden reutilizarse en otros sistemas o contextos.",
+"Las pruebas de integración verifican que los módulos del sistema funcionan correctamente cuando se combinan entre sí.",
+"La escala de tipo ratio tiene un cero absoluto (ausencia total del atributo), lo que permite comparaciones proporcionales.",
+"Un círculo con punto relleno representa el nodo inicial de una actividad en los diagramas de actividad UML.",
+"El producto software es el resultado entregable; el proceso software es el conjunto de actividades para crearlo.",
+"En los inicios de la IS predominaron los procesos secuenciales (cascada) con fuerte énfasis en la documentación.",
+"El objetivo de un prototipo es aclarar y validar los requisitos del usuario, reduciendo la ambigüedad y el riesgo.",
+"El Jefe de Proyecto es el responsable principal de la planificación, seguimiento y control del proyecto.",
+"El desarrollo incremental divide el producto en incrementos funcionales que se diseñan, construyen y entregan secuencialmente.",
+"El Sprint Backlog contiene las tareas seleccionadas del Product Backlog para el sprint actual.",
+"Estadísticamente, una gran parte de los proyectos de software fracasan o tienen problemas graves de plazo, coste o calidad.",
+"Scrum es un marco de trabajo ágil ligero para gestionar y controlar el desarrollo de productos complejos.",
+"ISO 12207 es una norma de proceso: define el ciclo de vida del software y los procesos necesarios para su desarrollo y mantenimiento.",
+"Los métodos formales (Z, VDM, B…) se basan en matemáticas y lógica formal para especificar y verificar software.",
+"RUP no impone pautas rígidas: es configurable y adaptable a las necesidades de cada proyecto y organización.",
+"La Ingeniería de Sistemas tiene un enfoque multidisciplinar (hardware, software, procesos, personas); la IS se centra en el software.",
+"La Robustez es la capacidad del software de recuperarse de situaciones anómalas (entradas incorrectas, fallos) sin perder datos.",
+"La ambigüedad y la falta de comunicación en la especificación de requisitos es una de las principales causas de fracaso de proyectos.",
+"Las métricas permiten cuantificar atributos de calidad (fiabilidad, eficiencia, mantenibilidad…) para gestionarlos y mejorarlos.",
+"En RUP, la fase de Transición se ocupa del despliegue del sistema en producción y la formación de los usuarios.",
+"Las metodologías tradicionales priorizan procesos bien definidos, documentación exhaustiva y control riguroso del cambio.",
+"El diagrama de secuencia es un diagrama de comportamiento (interacción) que muestra el intercambio de mensajes en el tiempo.",
+"Un programador del equipo es un recurso humano del proyecto; los demás elementos de la lista son herramientas o modelos.",
+"Los diagramas de comportamiento modelan la dinámica del sistema; la estructura estática corresponde a los diagramas estructurales.",
+"«Actividades y Tareas» en MÉTRICA 3.0 agrupa las acciones a realizar para alcanzar los objetivos del proyecto.",
+"El operador «opt» en un fragmento combinado de secuencia UML representa un comportamiento opcional (se ejecuta o no).",
+"La Propiedad Colectiva del Código en XP significa que cualquier miembro del equipo puede modificar cualquier parte del código.",
+"Los estándares recogen las mejores prácticas de la industria, facilitando la comunicación, la interoperabilidad y la calidad.",
+"Los transistores son componentes físicos del hardware; no forman parte del concepto de software.",
+"En los inicios (hasta los 50) el software se desarrollaba de forma manual, muy ligado al hardware específico de cada máquina.",
+"El desarrollo evolutivo parte de un prototipo simple que se expande y refina iterativamente mediante feedback hasta el producto final.",
+"El modelo en cascada se caracteriza por fases secuenciales y bien definidas: requisitos → diseño → codificación → pruebas → mantenimiento."
+];
+
+// ─── DATOS ────────────────────────────────────────────────────────────────────
 const ALL_QUESTIONS = [
 {q:"¿Qué significa la «reutilización» en el contexto de una metodología?",opts:["Uso de código de terceros sin licencia","Descartar componentes","Creación de productos nuevos","Uso de productos de trabajo ya existentes"],ans:3},
 {q:"¿Cómo se relacionan las «Actividades» y las «Tareas» en MÉTRICA 3.0?",opts:["Las actividades son independientes de las tareas","No hay relación","Las actividades son más pequeñas que las tareas","Las tareas son parte de una actividad"],ans:3},
@@ -571,10 +735,10 @@ const ALL_QUESTIONS = [
 {q:"¿Qué caracteriza al modelo en cascada?",opts:["Fases secuenciales bien definidas","Ausencia de documentación","Iteraciones constantes","Cambios constantes de requisitos"],ans:0},
 ];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
+// ─── ESTADO ───────────────────────────────────────────────────────────────────
 let examBatch = 10;
-let mode = '', questions = [], current = 0;
-// answers[i] = option index (number) | 'skip' | undefined
+let mode = '', questions = [], qIndices = [], current = 0;
+// answers[i] = índice opción | 'skip' | undefined
 let answers = {}, revealed = {}, filterReview = 'all';
 let autoAdvanceTimer = null;
 
@@ -585,7 +749,15 @@ function startMode(m){
   mode=m; answers={}; revealed={}; current=0;
   const n=Math.min(Math.max(parseInt(document.getElementById('batchInput')?.value)||examBatch,1),ALL_QUESTIONS.length);
   examBatch=n;
-  questions = m==='exam' ? shuffle(ALL_QUESTIONS).slice(0,n) : shuffle(ALL_QUESTIONS);
+  // Guardamos los índices originales para recuperar la explicación
+  const allIdx = ALL_QUESTIONS.map((_,i)=>i);
+  const shuffled = shuffle(allIdx);
+  if(m==='exam'){
+    qIndices = shuffled.slice(0,n);
+  } else {
+    qIndices = shuffled;
+  }
+  questions = qIndices.map(i=>ALL_QUESTIONS[i]);
   render();
 }
 
@@ -603,6 +775,7 @@ function selectAnswer(qi,oi){
   if(correct) playCorrect(); else playWrong();
   render();
   if(autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+  const delay = correct ? DELAY_CORRECT : DELAY_WRONG;
   autoAdvanceTimer=setTimeout(()=>{
     autoAdvanceTimer=null;
     const isLast=current===questions.length-1;
@@ -610,7 +783,7 @@ function selectAnswer(qi,oi){
       if(mode==='exam') finalizeExam();
       else{filterReview='all';document.getElementById('app').innerHTML=renderResults();updateHeader();}
     } else { current++; render(); }
-  },1100);
+  }, delay);
 }
 
 function skipQuestion(qi){
@@ -628,7 +801,7 @@ function skipQuestion(qi){
       if(mode==='exam') finalizeExam();
       else{filterReview='all';document.getElementById('app').innerHTML=renderResults();updateHeader();}
     } else { current++; render(); }
-  },900);
+  }, DELAY_SKIP);
 }
 
 function nav(d){
@@ -640,31 +813,30 @@ function setFilter(f){filterReview=f;render();}
 
 function calcScore(){
   let ok=0,ko=0,skip=0,noAns=0;
-  questions.forEach((q,i)=>{
+  questions.forEach((_,i)=>{
     if(answers[i]===undefined) noAns++;
     else if(answers[i]==='skip') skip++;
-    else if(answers[i]===q.ans) ok++;
+    else if(answers[i]===questions[i].ans) ok++;
     else ko++;
   });
-  const answered=ok+ko; // skip doesn't count toward score
-  const total=questions.length;
-  return{ok,ko,skip,noAns,answered,total};
+  return{ok,ko,skip,noAns,total:questions.length};
 }
 
 function updateHeader(){
   const h=document.getElementById('headerStats');
   if(!questions.length){h.innerHTML='';return;}
-  const{ok,ko,skip}=calcScore();
-  const ans=Object.keys(answers).filter(k=>answers[k]!==undefined).length;
+  const{ok,ko}=calcScore();
+  const ans=Object.keys(answers).length;
   h.innerHTML=`<span class="stat-badge">${ans}/${questions.length}</span>${ok?`<span class="stat-badge ok">✓ ${ok}</span>`:''}${ko?`<span class="stat-badge ko">✗ ${ko}</span>`:''}`;
 }
 
 function renderStart(){
   return`<div class="start-screen">
     <div class="quiz-card">
-      <div class="qm-title">Test FIS 25·26</div>
+      <div class="qm-title">Test FIS</div>
       <div class="qm-info">
-        He creado un html que sirve para practicar estas preguntas, no sé si estarán bien contestadas, ante la duda revisen cada una de las respuestas. Estas preguntas las he podido conseguir gracias a la colaboración de varios compañeros, espero que les sirva para practicar, ya que el año pasado cambiaron las preguntas.
+      He creado un HTML para practicar estas preguntas. No puedo asegurar que todas las respuestas sean las correctas, por lo que recomiendo revisarlas y contrastarlas con los apuntes de la asignatura ante cualquier duda.
+      Estas preguntas han sido recopiladas gracias a la colaboración de varios compañeros. Espero que os resulte útil para practicar, especialmente teniendo en cuenta que el año pasado se modificaron todas de las preguntas
       </div>
       <div class="qm-field">
         <label class="qm-label">Número de preguntas</label>
@@ -681,6 +853,11 @@ function renderStart(){
   </div>`;
 }
 
+function getExplain(qi){
+  const origIdx = qIndices[qi];
+  return (origIdx !== undefined && EXPLANATIONS[origIdx]) ? EXPLANATIONS[origIdx] : '';
+}
+
 function renderQ(qi){
   const q=questions[qi];
   const ua=answers[qi];
@@ -689,12 +866,13 @@ function renderQ(qi){
   const isSkipped=ua==='skip';
   const isCorrect=ua!==undefined&&ua!=='skip'&&ua===q.ans;
   const cardFlash=shown?(isSkipped?' flash-skip':isCorrect?' flash-ok':' flash-ko'):'';
+
   const opts=q.opts.map((o,i)=>{
     let cls='option';
     if(!isSkipped){
       if(ua===i) cls+=shown?(i===q.ans?' correct':' wrong'):' selected';
       else if(shown&&i===q.ans) cls+=' correct';
-    } else if(shown) {
+    } else if(shown){
       if(i===q.ans) cls+=' correct';
     }
     if(ua!==undefined||shown) cls+=' disabled';
@@ -708,12 +886,14 @@ function renderQ(qi){
 
   let fb='';
   if(shown){
+    const explain = getExplain(qi);
+    const explainHtml = explain ? `<div class="fb-explain">💡 ${explain}</div>` : '';
     if(isSkipped){
-      fb=`<div class="feedback skipped show">⤳ Pregunta saltada — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
+      fb=`<div class="feedback skipped show">⤳ Pregunta saltada — Respuesta correcta: <strong>${q.opts[q.ans]}</strong>${explainHtml}</div>`;
     } else if(ua!==undefined){
-      fb=ua===q.ans
-        ?`<div class="feedback ok show">✓ Correcto</div>`
-        :`<div class="feedback ko show">✗ Incorrecto — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
+      fb = ua===q.ans
+        ? `<div class="feedback ok show">✓ Correcto${explainHtml}</div>`
+        : `<div class="feedback ko show">✗ Incorrecto — Respuesta correcta: <strong>${q.opts[q.ans]}</strong>${explainHtml}</div>`;
     }
   }
   return`<div class="q-card${cardFlash}">
@@ -726,8 +906,8 @@ function renderQ(qi){
 }
 
 function renderResults(){
-  const{ok,ko,skip,noAns,answered,total}=calcScore();
-  const scorable=ok+ko; // skip not counted
+  const{ok,ko,skip,noAns,total}=calcScore();
+  const scorable=ok+ko;
   const pct=scorable>0?Math.round((ok/scorable)*100):0;
   const scoreClass=pct>=70?'pass':pct>=50?'mid':'fail';
 
@@ -737,7 +917,8 @@ function renderResults(){
     isNoAns:answers[i]===undefined,
     correct:answers[i]!==undefined&&answers[i]!=='skip'&&answers[i]===q.ans,
     chosen:answers[i]!==undefined&&answers[i]!=='skip'?q.opts[answers[i]]:null,
-    correctAns:q.opts[q.ans]
+    correctAns:q.opts[q.ans],
+    explain:getExplain(i)
   }));
   const filtered=rev.filter(r=>{
     if(filterReview==='all') return true;
@@ -755,6 +936,7 @@ function renderResults(){
           :`Tu respuesta: <span class="${r.correct?'right':'wrong-txt'}">${r.chosen}</span> · `}
         Correcta: <span class="right">${r.correctAns}</span>
       </div>
+      ${r.explain?`<div class="review-explain">💡 ${r.explain}</div>`:''}
     </div>`).join('');
 
   const skipTotal=skip+noAns;
@@ -770,7 +952,7 @@ function renderResults(){
     <div class="result-btns">
       <button class="btn primary" onclick="startMode('exam')">Nuevo examen</button>
       <button class="btn" onclick="startMode('practice')">Práctica libre</button>
-      <button class="btn ghost" onclick="if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}questions=[];render()">Inicio</button>
+      <button class="btn ghost" onclick="if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}questions=[];qIndices=[];render()">Inicio</button>
     </div>
   </div>
   <div class="review-title">Revisión de respuestas</div>
@@ -795,7 +977,6 @@ function render(){
   if(mode==='exam'&&allInteracted&&!autoAdvanceTimer){
     app.innerHTML=renderResults();return;
   }
-  const{ok,ko}=calcScore();
   const interacted=Object.keys(answers).length;
   const pct=Math.round((interacted/questions.length)*100);
   const isLast=current===questions.length-1;
@@ -807,7 +988,7 @@ function render(){
     else rightBtn=`<button class="btn primary" onclick="finalizeExam()">Ver resumen</button>`;
   }
   app.innerHTML=`
-    <div class="back-row"><button class="btn ghost" onclick="if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}questions=[];render()">← Inicio</button></div>
+    <div class="back-row"><button class="btn ghost" onclick="if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}questions=[];qIndices=[];render()">← Inicio</button></div>
     <div class="progress-wrap">
       <div class="progress-info">
         <span class="progress-label">${mode==='exam'?'Examen simulado':'Práctica libre'}</span>
@@ -835,3 +1016,4 @@ render();
 </script>
 </body>
 </html>
+
