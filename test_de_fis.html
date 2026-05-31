@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,43 +17,133 @@
     --green-bg: #0d2a1f;
     --red: #f87171;
     --red-bg: #2a0d0d;
+    --skip: #f59e0b;
+    --skip-bg: #2a1d05;
+    --skip-border: #4d3510;
     --text: #e8e8f0;
     --muted: #8888a0;
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
+    --shadow: rgba(0,0,0,0.4);
+    --start-bg1: #1a1040;
+    --start-bg2: #2d1b6e;
+    --start-bg3: #1e3a6e;
+    --start-bg4: #0f1a3a;
+    --card-bg: rgba(22, 20, 50, 0.88);
+    --card-border: rgba(140, 110, 255, 0.3);
+    --card-label: #c8c0f0;
+    --card-input-bg: #fff;
+    --card-input-text: #111;
   }
+
+  [data-theme="light"] {
+    --bg: #f4f3ff;
+    --surface: #ffffff;
+    --surface2: #ededf8;
+    --border: #d4d0f0;
+    --accent: #5b3de8;
+    --accent-light: #3d20c2;
+    --green: #15803d;
+    --green-bg: #dcfce7;
+    --red: #dc2626;
+    --red-bg: #fee2e2;
+    --skip: #b45309;
+    --skip-bg: #fef3c7;
+    --skip-border: #fcd34d;
+    --text: #1a1830;
+    --muted: #6b6894;
+    --shadow: rgba(91,61,232,0.08);
+    --start-bg1: #ede8ff;
+    --start-bg2: #ddd6fe;
+    --start-bg3: #c7d2fe;
+    --start-bg4: #e0e7ff;
+    --card-bg: rgba(255,255,255,0.95);
+    --card-border: rgba(91,61,232,0.25);
+    --card-label: #4b4880;
+    --card-input-bg: #f8f7ff;
+    --card-input-text: #1a1830;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
     background: var(--bg);
     color: var(--text);
     font-family: var(--sans);
     min-height: 100vh;
     padding: 0;
+    transition: background 0.3s, color 0.3s;
   }
+
+  /* ─── HEADER ─────────────────────────────────────── */
   header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
+    padding: 12px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 100;
+    transition: background 0.3s, border-color 0.3s;
   }
   .logo { font-family: var(--mono); font-size: 14px; color: var(--accent-light); letter-spacing: 0.05em; }
   .logo span { color: var(--muted); }
-  .header-stats { display: flex; gap: 16px; align-items: center; }
-  .stat-badge { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); }
+  .header-right { display: flex; gap: 12px; align-items: center; }
+  .stat-badge { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); transition: background 0.3s; }
   .stat-badge.ok { color: var(--green); border-color: #1e4d38; background: var(--green-bg); }
   .stat-badge.ko { color: var(--red); border-color: #4d1e1e; background: var(--red-bg); }
+  [data-theme="light"] .stat-badge.ok { border-color: #86efac; }
+  [data-theme="light"] .stat-badge.ko { border-color: #fca5a5; }
 
+  /* ─── THEME TOGGLE ────────────────────────────────── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    transition: all 0.2s;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--text); }
+  .toggle-track {
+    width: 34px; height: 18px;
+    border-radius: 9px;
+    background: var(--border);
+    position: relative;
+    transition: background 0.25s;
+    flex-shrink: 0;
+  }
+  [data-theme="light"] .toggle-track { background: var(--accent); }
+  .toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: transform 0.25s, background 0.25s;
+  }
+  [data-theme="light"] .toggle-thumb { transform: translateX(16px); background: #fff; }
+  .toggle-icon { font-size: 14px; }
+
+  /* ─── MAIN ────────────────────────────────────────── */
   main { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
 
   body.on-start {
-    background: linear-gradient(135deg, #1a1040 0%, #2d1b6e 35%, #1e3a6e 70%, #0f1a3a 100%) !important;
+    background: linear-gradient(135deg, var(--start-bg1) 0%, var(--start-bg2) 35%, var(--start-bg3) 70%, var(--start-bg4) 100%) !important;
     background-attachment: fixed !important;
   }
+
+  /* ─── START CARD ──────────────────────────────────── */
   .start-screen {
     display: flex;
     align-items: center;
@@ -63,59 +152,100 @@
     padding: 32px 16px;
   }
   .quiz-card {
-    background: rgba(22, 20, 50, 0.88);
-    border: 1px solid rgba(140, 110, 255, 0.3);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 40px 36px 36px;
     width: 100%;
-    max-width: 420px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    max-width: 440px;
+    box-shadow: 0 8px 40px var(--shadow), 0 0 0 1px rgba(255,255,255,0.04) inset;
     backdrop-filter: blur(12px);
+    transition: background 0.3s, border-color 0.3s;
   }
-  .qm-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 30px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 28px; letter-spacing: -0.02em; }
+  .qm-title { font-family: var(--sans); font-size: 30px; font-weight: 700; color: var(--text); text-align: center; margin-bottom: 28px; letter-spacing: -0.02em; }
   .qm-field { margin-bottom: 18px; }
-  .qm-label { display: block; font-size: 14px; color: #c8c0f0; margin-bottom: 8px; font-weight: 500; text-align: center; }
-  .qm-input { width: 100%; background: #fff; border: none; border-radius: 8px; padding: 11px 16px; font-size: 16px; color: #111; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500; text-align: center; outline: none; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-  .qm-input:focus { box-shadow: 0 0 0 3px rgba(140,110,255,0.5); }
-  .qm-checkrow { display: flex; gap: 20px; align-items: center; margin-bottom: 24px; justify-content: center; }
-  .qm-check { display: flex; align-items: center; gap: 7px; font-size: 14px; color: #c8c0f0; cursor: pointer; font-weight: 500; user-select: none; }
-  .qm-check input[type="checkbox"] { width: 17px; height: 17px; accent-color: #7c6af7; cursor: pointer; }
-  .qm-btn-start { width: 100%; background: linear-gradient(135deg, #5b3de8 0%, #3d6fdb 100%); border: none; border-radius: 10px; padding: 14px; font-size: 16px; font-weight: 700; color: #fff; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: opacity 0.15s, transform 0.1s; box-shadow: 0 4px 16px rgba(91,61,232,0.4); margin-bottom: 10px; }
+  .qm-label { display: block; font-size: 14px; color: var(--card-label); margin-bottom: 8px; font-weight: 500; text-align: center; }
+  .qm-input { width: 100%; background: var(--card-input-bg); border: 1px solid var(--border); border-radius: 8px; padding: 11px 16px; font-size: 16px; color: var(--card-input-text); font-family: var(--sans); font-weight: 500; text-align: center; outline: none; transition: background 0.3s, border-color 0.3s; }
+  .qm-input:focus { box-shadow: 0 0 0 3px rgba(140,110,255,0.35); border-color: var(--accent); }
+  .qm-checkrow { display: flex; gap: 20px; align-items: center; margin-bottom: 24px; justify-content: center; flex-wrap: wrap; }
+  .qm-check { display: flex; align-items: center; gap: 7px; font-size: 14px; color: var(--card-label); cursor: pointer; font-weight: 500; user-select: none; }
+  .qm-check input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
+  .qm-btn-start { width: 100%; background: linear-gradient(135deg, #5b3de8 0%, #3d6fdb 100%); border: none; border-radius: 10px; padding: 14px; font-size: 16px; font-weight: 700; color: #fff; cursor: pointer; font-family: var(--sans); transition: opacity 0.15s, transform 0.1s; box-shadow: 0 4px 16px rgba(91,61,232,0.35); margin-bottom: 10px; }
   .qm-btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
   .qm-btn-start:active { transform: translateY(0); }
-  .qm-btn-practice { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; color: #c8c0f0; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: background 0.15s, border-color 0.15s; }
-  .qm-btn-practice:hover { background: rgba(255,255,255,0.1); border-color: rgba(140,110,255,0.4); color: #fff; }
-  .qm-divider { text-align: center; font-size: 12px; color: rgba(200,192,240,0.35); margin: 6px 0; font-family: var(--mono); }
+  .qm-btn-practice { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 600; color: var(--card-label); cursor: pointer; font-family: var(--sans); transition: background 0.15s, border-color 0.15s; }
+  .qm-btn-practice:hover { background: rgba(255,255,255,0.12); border-color: rgba(140,110,255,0.5); color: var(--text); }
+  [data-theme="light"] .qm-btn-practice { background: var(--surface2); }
+  [data-theme="light"] .qm-btn-practice:hover { background: var(--border); }
+  .qm-divider { text-align: center; font-size: 12px; color: var(--muted); margin: 6px 0; font-family: var(--mono); }
+  .qm-info {
+    background: rgba(124,106,247,0.08);
+    border: 1px solid rgba(124,106,247,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 22px;
+    font-size: 13px;
+    color: var(--card-label);
+    line-height: 1.65;
+  }
+  [data-theme="light"] .qm-info { background: rgba(91,61,232,0.06); border-color: rgba(91,61,232,0.2); }
 
+  /* ─── PROGRESS ────────────────────────────────────── */
   .progress-wrap { margin-bottom: 24px; }
   .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; }
   .progress-label { font-family: var(--mono); font-size: 12px; color: var(--muted); }
   .progress-track { height: 3px; background: var(--border); border-radius: 2px; }
   .progress-fill { height: 3px; background: var(--accent); border-radius: 2px; transition: width 0.3s ease; }
 
-  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; transition: border-color 0.2s; }
+  /* ─── QUESTION CARD ───────────────────────────────── */
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 20px; transition: border-color 0.2s, box-shadow 0.2s, background 0.3s; }
   .q-card.flash-ok { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
   .q-card.flash-ko { border-color: var(--red); box-shadow: 0 0 0 1px var(--red); }
+  .q-card.flash-skip { border-color: var(--skip); box-shadow: 0 0 0 1px var(--skip); }
   .q-number { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
   .q-text { font-size: 17px; line-height: 1.6; font-weight: 500; margin-bottom: 24px; }
+
   .options { display: flex; flex-direction: column; gap: 10px; }
   .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.12s; background: var(--bg); }
-  .option:hover:not(.disabled) { border-color: var(--accent); background: #1a1830; }
-  .option.selected { border-color: var(--accent); background: #1a1830; }
+  .option:hover:not(.disabled) { border-color: var(--accent); background: var(--surface2); }
+  .option.selected { border-color: var(--accent); background: var(--surface2); }
   .option.correct { border-color: var(--green); background: var(--green-bg); }
   .option.wrong { border-color: var(--red); background: var(--red-bg); }
   .option.disabled { cursor: default; }
   .opt-key { font-family: var(--mono); font-size: 12px; font-weight: 500; min-width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); color: var(--muted); flex-shrink: 0; margin-top: 1px; transition: all 0.12s; }
   .option.selected .opt-key { border-color: var(--accent); color: var(--accent-light); }
-  .option.correct .opt-key { border-color: var(--green); color: var(--green); background: rgba(62,207,142,0.1); }
-  .option.wrong .opt-key { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.1); }
+  .option.correct .opt-key { border-color: var(--green); color: var(--green); background: rgba(62,207,142,0.12); }
+  .option.wrong .opt-key { border-color: var(--red); color: var(--red); background: rgba(248,113,113,0.12); }
   .opt-text { font-size: 14px; line-height: 1.5; }
+
+  /* ─── SKIP BUTTON ─────────────────────────────────── */
+  .skip-row { display: flex; justify-content: center; margin-top: 14px; }
+  .btn-skip {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px dashed var(--skip-border);
+    background: transparent;
+    color: var(--skip);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn-skip:hover { background: var(--skip-bg); border-style: solid; }
+
+  /* ─── FEEDBACK ────────────────────────────────────── */
   .feedback { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.5; display: none; }
   .feedback.show { display: block; }
   .feedback.ok { background: var(--green-bg); border: 1px solid #1e4d38; color: var(--green); }
-  .feedback.ko { background: var(--red-bg); border: 1px solid #4d1e1e; color: #f9a8a8; }
+  .feedback.ko { background: var(--red-bg); border: 1px solid #4d1e1e; color: var(--red); }
+  .feedback.skipped { background: var(--skip-bg); border: 1px solid var(--skip-border); color: var(--skip); }
   .feedback strong { color: var(--text); }
+  [data-theme="light"] .feedback.ok { border-color: #86efac; }
+  [data-theme="light"] .feedback.ko { border-color: #fca5a5; }
 
+  /* ─── NAV ─────────────────────────────────────────── */
   .nav-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; }
   .btn { font-family: var(--sans); font-size: 14px; padding: 9px 20px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; transition: all 0.12s; font-weight: 500; }
   .btn:hover { border-color: var(--accent); color: var(--accent-light); }
@@ -125,37 +255,45 @@
   .btn.ghost { background: transparent; border-color: transparent; color: var(--muted); font-size: 13px; }
   .btn.ghost:hover { color: var(--text); border-color: transparent; }
 
-  .results-header { text-align: center; padding: 48px 24px 36px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px; }
+  /* ─── RESULTS ─────────────────────────────────────── */
+  .results-header { text-align: center; padding: 48px 24px 36px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px; transition: background 0.3s; }
   .big-score { font-family: var(--mono); font-size: 72px; font-weight: 500; line-height: 1; margin-bottom: 4px; }
   .big-score.pass { color: var(--green); }
   .big-score.fail { color: var(--red); }
-  .big-score.mid { color: #fbbf24; }
+  .big-score.mid { color: #f59e0b; }
   .score-label { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-  .score-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .score-grid { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
   .score-pill { font-family: var(--mono); font-size: 13px; padding: 6px 16px; border-radius: 20px; }
   .score-pill.ok { background: var(--green-bg); color: var(--green); border: 1px solid #1e4d38; }
   .score-pill.ko { background: var(--red-bg); color: var(--red); border: 1px solid #4d1e1e; }
-  .score-pill.sk { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+  .score-pill.sk { background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border); }
+  .score-pill.ns { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+  [data-theme="light"] .score-pill.ok { border-color: #86efac; }
+  [data-theme="light"] .score-pill.ko { border-color: #fca5a5; }
   .result-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
+  /* ─── REVIEW ──────────────────────────────────────── */
   .review-title { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; margin-top: 32px; }
   .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
   .filter-btn { font-size: 12px; padding: 5px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.12s; }
   .filter-btn:hover { color: var(--text); border-color: var(--accent); }
   .filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
-  .review-item { padding: 14px 16px; border: 1px solid var(--border); border-left-width: 3px; border-radius: 8px; margin-bottom: 10px; background: var(--surface); }
+  .review-item { padding: 14px 16px; border: 1px solid var(--border); border-left-width: 3px; border-radius: 8px; margin-bottom: 10px; background: var(--surface); transition: background 0.3s; }
   .review-item.ok { border-left-color: var(--green); }
   .review-item.ko { border-left-color: var(--red); }
+  .review-item.sk { border-left-color: var(--skip); }
   .review-q { font-size: 14px; font-weight: 500; margin-bottom: 6px; line-height: 1.5; }
   .review-ans { font-size: 13px; color: var(--muted); }
   .review-ans .right { color: var(--green); font-weight: 500; }
   .review-ans .wrong-txt { color: var(--red); }
+  .review-ans .skip-txt { color: var(--skip); }
   .back-row { margin-bottom: 20px; }
 
   @media (max-width: 500px) {
     .q-text { font-size: 15px; }
     .big-score { font-size: 52px; }
-    header { flex-direction: column; gap: 10px; align-items: flex-start; }
+    header { flex-wrap: wrap; gap: 10px; }
+    .theme-toggle .toggle-label { display: none; }
   }
 </style>
 </head>
@@ -163,69 +301,79 @@
 
 <header>
   <div class="logo">test<span>/</span>FIS <span>— 25·26</span></div>
-  <div class="header-stats" id="headerStats"></div>
+  <div class="header-right">
+    <div id="headerStats" style="display:flex;gap:8px;align-items:center;"></div>
+    <div class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+      <span class="toggle-icon" id="themeIcon">🌙</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+      <span class="toggle-label" style="font-size:11px;">Claro</span>
+    </div>
+  </div>
 </header>
 
 <main id="app"></main>
 
 <script>
-// ─── AUDIO ENGINE ────────────────────────────────────────────────────────────
+// ─── THEME ────────────────────────────────────────────────────────────────────
+let currentTheme = localStorage.getItem('fis-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', currentTheme);
+document.getElementById('themeIcon').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  localStorage.setItem('fis-theme', currentTheme);
+  document.getElementById('themeIcon').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+}
+
+// ─── AUDIO ────────────────────────────────────────────────────────────────────
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let _ctx = null;
-function getCtx() {
-  if (!_ctx) _ctx = new AudioCtx();
-  return _ctx;
-}
+function getCtx() { if (!_ctx) _ctx = new AudioCtx(); return _ctx; }
 
 function playCorrect() {
   try {
     const ctx = getCtx();
-    // Kahoot-style rising "ding ding" — two bright tones
-    const notes = [
-      { freq: 659.25, t: 0,    dur: 0.12 },  // E5
-      { freq: 880.00, t: 0.13, dur: 0.18 },  // A5
-    ];
-    notes.forEach(({ freq, t, dur }) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + t);
-      gain.gain.setValueAtTime(0, ctx.currentTime + t);
-      gain.gain.linearRampToValueAtTime(0.4, ctx.currentTime + t + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + dur);
-      osc.start(ctx.currentTime + t);
-      osc.stop(ctx.currentTime + t + dur + 0.05);
+    [{freq:659.25,t:0,dur:0.12},{freq:880,t:0.13,dur:0.18}].forEach(({freq,t,dur})=>{
+      const osc=ctx.createOscillator(), gain=ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type='sine'; osc.frequency.setValueAtTime(freq,ctx.currentTime+t);
+      gain.gain.setValueAtTime(0,ctx.currentTime+t);
+      gain.gain.linearRampToValueAtTime(0.4,ctx.currentTime+t+0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+dur);
+      osc.start(ctx.currentTime+t); osc.stop(ctx.currentTime+t+dur+0.05);
     });
-  } catch(e) {}
+  } catch(e){}
 }
-
 function playWrong() {
   try {
     const ctx = getCtx();
-    // Descending buzzer — two low tones dropping in pitch
-    const notes = [
-      { freq: 220, t: 0,    dur: 0.14 },
-      { freq: 150, t: 0.15, dur: 0.22 },
-    ];
-    notes.forEach(({ freq, t, dur }) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + t);
-      gain.gain.setValueAtTime(0, ctx.currentTime + t);
-      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + t + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + dur);
-      osc.start(ctx.currentTime + t);
-      osc.stop(ctx.currentTime + t + dur + 0.05);
+    [{freq:220,t:0,dur:0.14},{freq:150,t:0.15,dur:0.22}].forEach(({freq,t,dur})=>{
+      const osc=ctx.createOscillator(), gain=ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type='sawtooth'; osc.frequency.setValueAtTime(freq,ctx.currentTime+t);
+      gain.gain.setValueAtTime(0,ctx.currentTime+t);
+      gain.gain.linearRampToValueAtTime(0.25,ctx.currentTime+t+0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+dur);
+      osc.start(ctx.currentTime+t); osc.stop(ctx.currentTime+t+dur+0.05);
     });
-  } catch(e) {}
+  } catch(e){}
 }
-// ─────────────────────────────────────────────────────────────────────────────
+function playSkip() {
+  try {
+    const ctx = getCtx();
+    const osc=ctx.createOscillator(), gain=ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type='triangle'; osc.frequency.setValueAtTime(400,ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(300,ctx.currentTime+0.15);
+    gain.gain.setValueAtTime(0,ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.15,ctx.currentTime+0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime+0.25);
+  } catch(e){}
+}
 
+// ─── DATA ─────────────────────────────────────────────────────────────────────
 const ALL_QUESTIONS = [
 {q:"¿Qué significa la «reutilización» en el contexto de una metodología?",opts:["Uso de código de terceros sin licencia","Descartar componentes","Creación de productos nuevos","Uso de productos de trabajo ya existentes"],ans:3},
 {q:"¿Cómo se relacionan las «Actividades» y las «Tareas» en MÉTRICA 3.0?",opts:["Las actividades son independientes de las tareas","No hay relación","Las actividades son más pequeñas que las tareas","Las tareas son parte de una actividad"],ans:3},
@@ -423,14 +571,17 @@ const ALL_QUESTIONS = [
 {q:"¿Qué caracteriza al modelo en cascada?",opts:["Fases secuenciales bien definidas","Ausencia de documentación","Iteraciones constantes","Cambios constantes de requisitos"],ans:0},
 ];
 
+// ─── STATE ────────────────────────────────────────────────────────────────────
 let examBatch = 10;
-let mode = '', questions = [], current = 0, answers = {}, revealed = {}, filterReview = 'all';
+let mode = '', questions = [], current = 0;
+// answers[i] = option index (number) | 'skip' | undefined
+let answers = {}, revealed = {}, filterReview = 'all';
 let autoAdvanceTimer = null;
 
 function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 
 function startMode(m){
-  if(autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer=null; }
+  if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}
   mode=m; answers={}; revealed={}; current=0;
   const n=Math.min(Math.max(parseInt(document.getElementById('batchInput')?.value)||examBatch,1),ALL_QUESTIONS.length);
   examBatch=n;
@@ -445,50 +596,66 @@ function updateBatch(val){
 
 function selectAnswer(qi,oi){
   if(answers[qi]!==undefined) return;
-  // Unlock audio context on first interaction
-  if(_ctx && _ctx.state==='suspended') _ctx.resume();
+  if(_ctx&&_ctx.state==='suspended') _ctx.resume();
   answers[qi]=oi;
   revealed[qi]=true;
-  const correct = oi === questions[qi].ans;
+  const correct=oi===questions[qi].ans;
   if(correct) playCorrect(); else playWrong();
   render();
-  // Auto-advance after 1.1s
   if(autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
-  autoAdvanceTimer = setTimeout(() => {
-    autoAdvanceTimer = null;
-    const isLast = current === questions.length - 1;
-    if(isLast) {
+  autoAdvanceTimer=setTimeout(()=>{
+    autoAdvanceTimer=null;
+    const isLast=current===questions.length-1;
+    if(isLast){
       if(mode==='exam') finalizeExam();
-      else { filterReview='all'; document.getElementById('app').innerHTML=renderResults(); updateHeader(); }
-    } else {
-      current++;
-      render();
-    }
-  }, 1100);
+      else{filterReview='all';document.getElementById('app').innerHTML=renderResults();updateHeader();}
+    } else { current++; render(); }
+  },1100);
+}
+
+function skipQuestion(qi){
+  if(answers[qi]!==undefined) return;
+  if(_ctx&&_ctx.state==='suspended') _ctx.resume();
+  answers[qi]='skip';
+  revealed[qi]=true;
+  playSkip();
+  render();
+  if(autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+  autoAdvanceTimer=setTimeout(()=>{
+    autoAdvanceTimer=null;
+    const isLast=current===questions.length-1;
+    if(isLast){
+      if(mode==='exam') finalizeExam();
+      else{filterReview='all';document.getElementById('app').innerHTML=renderResults();updateHeader();}
+    } else { current++; render(); }
+  },900);
 }
 
 function nav(d){
-  if(autoAdvanceTimer){ clearTimeout(autoAdvanceTimer); autoAdvanceTimer=null; }
+  if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}
   current=Math.max(0,Math.min(questions.length-1,current+d));
   render();
 }
 function setFilter(f){filterReview=f;render();}
 
 function calcScore(){
-  let ok=0,ko=0,skip=0;
+  let ok=0,ko=0,skip=0,noAns=0;
   questions.forEach((q,i)=>{
-    if(answers[i]===undefined)skip++;
-    else if(answers[i]===q.ans)ok++;
+    if(answers[i]===undefined) noAns++;
+    else if(answers[i]==='skip') skip++;
+    else if(answers[i]===q.ans) ok++;
     else ko++;
   });
-  return{ok,ko,skip,total:questions.length};
+  const answered=ok+ko; // skip doesn't count toward score
+  const total=questions.length;
+  return{ok,ko,skip,noAns,answered,total};
 }
 
 function updateHeader(){
   const h=document.getElementById('headerStats');
   if(!questions.length){h.innerHTML='';return;}
-  const{ok,ko}=calcScore();
-  const ans=Object.keys(answers).length;
+  const{ok,ko,skip}=calcScore();
+  const ans=Object.keys(answers).filter(k=>answers[k]!==undefined).length;
   h.innerHTML=`<span class="stat-badge">${ans}/${questions.length}</span>${ok?`<span class="stat-badge ok">✓ ${ok}</span>`:''}${ko?`<span class="stat-badge ko">✗ ${ko}</span>`:''}`;
 }
 
@@ -496,7 +663,7 @@ function renderStart(){
   return`<div class="start-screen">
     <div class="quiz-card">
       <div class="qm-title">Test FIS 25·26</div>
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,192,240,0.2);border-radius:10px;padding:14px 16px;margin-bottom:22px;font-size:13px;color:#c8c0f0;line-height:1.6;">
+      <div class="qm-info">
         He creado un html que sirve para practicar estas preguntas, no sé si estarán bien contestadas, ante la duda revisen cada una de las respuestas. Estas preguntas las he podido conseguir gracias a la colaboración de varios compañeros, espero que les sirva para practicar, ya que el año pasado cambiaron las preguntas.
       </div>
       <div class="qm-field">
@@ -519,66 +686,99 @@ function renderQ(qi){
   const ua=answers[qi];
   const shown=revealed[qi];
   const L=['A','B','C','D'];
-  const isCorrect = ua !== undefined && ua === q.ans;
-  const cardFlash = shown ? (isCorrect ? ' flash-ok' : ' flash-ko') : '';
+  const isSkipped=ua==='skip';
+  const isCorrect=ua!==undefined&&ua!=='skip'&&ua===q.ans;
+  const cardFlash=shown?(isSkipped?' flash-skip':isCorrect?' flash-ok':' flash-ko'):'';
   const opts=q.opts.map((o,i)=>{
     let cls='option';
-    if(ua===i) cls+=shown?(i===q.ans?' correct':' wrong'):' selected';
-    else if(shown&&i===q.ans) cls+=' correct';
+    if(!isSkipped){
+      if(ua===i) cls+=shown?(i===q.ans?' correct':' wrong'):' selected';
+      else if(shown&&i===q.ans) cls+=' correct';
+    } else if(shown) {
+      if(i===q.ans) cls+=' correct';
+    }
     if(ua!==undefined||shown) cls+=' disabled';
     return`<div class="${cls}" onclick="selectAnswer(${qi},${i})"><span class="opt-key">${L[i]}</span><span class="opt-text">${o}</span></div>`;
   }).join('');
+
+  let skipBtn='';
+  if(ua===undefined && !shown){
+    skipBtn=`<div class="skip-row"><button class="btn-skip" onclick="skipQuestion(${qi})">⤳ Saltar pregunta</button></div>`;
+  }
+
   let fb='';
   if(shown){
-    if(ua!==undefined){
+    if(isSkipped){
+      fb=`<div class="feedback skipped show">⤳ Pregunta saltada — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
+    } else if(ua!==undefined){
       fb=ua===q.ans
         ?`<div class="feedback ok show">✓ Correcto</div>`
         :`<div class="feedback ko show">✗ Incorrecto — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
-    } else {
-      fb=`<div class="feedback ko show">Sin respuesta — Respuesta correcta: <strong>${q.opts[q.ans]}</strong></div>`;
     }
   }
   return`<div class="q-card${cardFlash}">
     <div class="q-number">Pregunta ${qi+1} de ${questions.length}</div>
     <div class="q-text">${q.q}</div>
     <div class="options">${opts}</div>
+    ${skipBtn}
     ${fb}
   </div>`;
 }
 
 function renderResults(){
-  const{ok,ko,skip,total}=calcScore();
-  const pct=Math.round((ok/total)*100);
+  const{ok,ko,skip,noAns,answered,total}=calcScore();
+  const scorable=ok+ko; // skip not counted
+  const pct=scorable>0?Math.round((ok/scorable)*100):0;
   const scoreClass=pct>=70?'pass':pct>=50?'mid':'fail';
-  const rev=questions.map((q,i)=>({idx:i,q:q.q,correct:answers[i]===q.ans,chosen:answers[i]!==undefined?q.opts[answers[i]]:null,correctAns:q.opts[q.ans]}));
-  const filtered=rev.filter(r=>filterReview==='all'?true:filterReview==='ok'?r.correct:!r.correct);
+
+  const rev=questions.map((q,i)=>({
+    idx:i,q:q.q,
+    isSkip:answers[i]==='skip',
+    isNoAns:answers[i]===undefined,
+    correct:answers[i]!==undefined&&answers[i]!=='skip'&&answers[i]===q.ans,
+    chosen:answers[i]!==undefined&&answers[i]!=='skip'?q.opts[answers[i]]:null,
+    correctAns:q.opts[q.ans]
+  }));
+  const filtered=rev.filter(r=>{
+    if(filterReview==='all') return true;
+    if(filterReview==='ok') return r.correct;
+    if(filterReview==='ko') return !r.correct&&!r.isSkip&&!r.isNoAns;
+    if(filterReview==='sk') return r.isSkip||r.isNoAns;
+    return true;
+  });
   const revHtml=filtered.map(r=>`
-    <div class="review-item ${r.correct?'ok':'ko'}">
+    <div class="review-item ${r.correct?'ok':r.isSkip||r.isNoAns?'sk':'ko'}">
       <div class="review-q">${r.idx+1}. ${r.q}</div>
       <div class="review-ans">
-        ${r.chosen?`Tu respuesta: <span class="${r.correct?'right':'wrong-txt'}">${r.chosen}</span> · `:'Sin respuesta · '}
+        ${r.isSkip?`<span class="skip-txt">⤳ Saltada</span> · `
+          :r.isNoAns?`<span class="skip-txt">Sin responder</span> · `
+          :`Tu respuesta: <span class="${r.correct?'right':'wrong-txt'}">${r.chosen}</span> · `}
         Correcta: <span class="right">${r.correctAns}</span>
       </div>
     </div>`).join('');
+
+  const skipTotal=skip+noAns;
   return`<div class="results-header">
     <div class="big-score ${scoreClass}">${pct}%</div>
-    <div class="score-label">Resultado del examen simulado</div>
+    <div class="score-label">Puntuación sobre preguntas respondidas · ${ok} de ${scorable} correctas</div>
     <div class="score-grid">
       <span class="score-pill ok">✓ ${ok} correctas</span>
       <span class="score-pill ko">✗ ${ko} incorrectas</span>
-      ${skip?`<span class="score-pill sk">⊘ ${skip} sin responder</span>`:''}
+      ${skip?`<span class="score-pill sk">⤳ ${skip} saltadas</span>`:''}
+      ${noAns?`<span class="score-pill ns">⊘ ${noAns} sin responder</span>`:''}
     </div>
     <div class="result-btns">
       <button class="btn primary" onclick="startMode('exam')">Nuevo examen</button>
       <button class="btn" onclick="startMode('practice')">Práctica libre</button>
-      <button class="btn ghost" onclick="questions=[];render()">Inicio</button>
+      <button class="btn ghost" onclick="if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}questions=[];render()">Inicio</button>
     </div>
   </div>
   <div class="review-title">Revisión de respuestas</div>
   <div class="filter-row">
     <button class="filter-btn ${filterReview==='all'?'active':''}" onclick="setFilter('all')">Todas (${total})</button>
     <button class="filter-btn ${filterReview==='ok'?'active':''}" onclick="setFilter('ok')">Correctas (${ok})</button>
-    <button class="filter-btn ${filterReview==='ko'?'active':''}" onclick="setFilter('ko')">Incorrectas (${ko+skip})</button>
+    <button class="filter-btn ${filterReview==='ko'?'active':''}" onclick="setFilter('ko')">Incorrectas (${ko})</button>
+    ${skipTotal?`<button class="filter-btn ${filterReview==='sk'?'active':''}" onclick="setFilter('sk')">Saltadas/Sin responder (${skipTotal})</button>`:''}
   </div>
   ${revHtml}`;
 }
@@ -591,30 +791,27 @@ function render(){
     app.innerHTML=renderStart();return;
   }
   document.body.classList.remove('on-start');
-  if(mode==='exam'&&Object.keys(answers).length===questions.length&&!autoAdvanceTimer){
+  const allInteracted=Object.keys(answers).length===questions.length;
+  if(mode==='exam'&&allInteracted&&!autoAdvanceTimer){
     app.innerHTML=renderResults();return;
   }
   const{ok,ko}=calcScore();
-  const answered=Object.keys(answers).length;
-  const pct=Math.round((answered/questions.length)*100);
+  const interacted=Object.keys(answers).length;
+  const pct=Math.round((interacted/questions.length)*100);
   const isLast=current===questions.length-1;
-  const allDone=answered===questions.length;
-
-  // Only show nav buttons if current question is already answered (user navigating back)
-  const curAnswered = answers[current] !== undefined;
+  const curInteracted=answers[current]!==undefined;
   let rightBtn='';
-  if(curAnswered || allDone) {
+  if(curInteracted||allInteracted){
     if(!isLast) rightBtn=`<button class="btn primary" onclick="nav(1)">Siguiente →</button>`;
     else if(mode==='exam') rightBtn=`<button class="btn primary" onclick="finalizeExam()">Ver resultados</button>`;
     else rightBtn=`<button class="btn primary" onclick="finalizeExam()">Ver resumen</button>`;
   }
-
   app.innerHTML=`
     <div class="back-row"><button class="btn ghost" onclick="if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}questions=[];render()">← Inicio</button></div>
     <div class="progress-wrap">
       <div class="progress-info">
         <span class="progress-label">${mode==='exam'?'Examen simulado':'Práctica libre'}</span>
-        <span class="progress-label">${answered}/${questions.length} respondidas</span>
+        <span class="progress-label">${interacted}/${questions.length} respondidas</span>
       </div>
       <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
     </div>
@@ -627,8 +824,7 @@ function render(){
 }
 
 function finalizeExam(){
-  if(autoAdvanceTimer){ clearTimeout(autoAdvanceTimer); autoAdvanceTimer=null; }
-  questions.forEach((_,i)=>{if(answers[i]===undefined)revealed[i]=true;});
+  if(autoAdvanceTimer){clearTimeout(autoAdvanceTimer);autoAdvanceTimer=null;}
   filterReview='all';
   const app=document.getElementById('app');
   app.innerHTML=renderResults();
